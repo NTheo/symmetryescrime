@@ -8,24 +8,19 @@ import Jcg.geometry.*;
  * @author Luca Castelli Aleardi (INF555, 2012)
  *
  */
+@SuppressWarnings("serial")
 public class MeshViewer extends PApplet {
 
 	SurfaceMesh mesh;
-	//String filename="OFF/high_genus.off";
-	//String filename="OFF/sphere.off";
-	//String filename="OFF/cube.off";
-	//String filename="OFF/torus_33.off";
-	//String filename="OFF/tore.off";
-	String filename="OFF/tri_round_cube.off";
-	//String filename="OFF/tri_hedra.off";
-	//String filename="OFF/tri_triceratops.off";
+	//String filename="OFF/tri_round_cube.off";
+	String filename="OFF/tri_triceratops.off";
 	
 	public void setup() {
 		  size(800,600,P3D);
+		  @SuppressWarnings("unused")
 		  ArcBall arcball = new ArcBall(this);
 		  
 		  this.mesh=new SurfaceMesh(this, filename);
-		  
 		  this.mesh.polyhedron3D.isValid(false);
 	}
 		 
