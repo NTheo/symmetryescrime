@@ -8,17 +8,25 @@ import Jcg.polyhedron.Vertex;
  */
 public class Sign7 extends Sign {
 
-	Sign7(double threshold) {
-		super(threshold);
-	}
-
 	private double r;//r=k1/k2
 	
-	void computeSign(SurfaceMesh m, Vertex<Point_3> v, double radius) {
-		// TODO compute r
+	void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
+		double[] k = super.signatures(m, v);
+		if(k[0]>k[1]){
+			if(k[1]>0.){
+				r = k[1]/k[0];
+			} else {
+				r = 0.;
+			}
+		} else {
+			if(k[1]>0.){
+				r = k[0]/k[1];
+			} else {
+				r = 0.;
+			}
+	}
 	}
 
-	@Override
 	boolean isValid() {
 		return r<threshold;
 	}

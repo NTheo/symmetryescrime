@@ -8,15 +8,18 @@ import Jcg.polyhedron.Vertex;
  */
 public class Sign6 extends Sign {
 
-	Sign6(double threshold) {
-		super(threshold);
-	}
-
 	public double k1;
 	public double k2; //according to the paper, k2>=k1
 	
-	void computeSign(SurfaceMesh m, Vertex<Point_3> v, double radius) {
-		// TODO compute k1 and k2
+	void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
+		double[] k = super.signatures(m, v);
+		if(k[0]>k[1]){
+			k1 = k[1];
+			k2 = k[0];
+		} else {
+			k1 = k[0];
+			k2 = k[1];
+		}
 	}
 
 	boolean isValid() {
