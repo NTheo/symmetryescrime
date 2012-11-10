@@ -1,3 +1,4 @@
+import processing.core.PConstants;
 import Jcg.geometry.*;
 import Jcg.polyhedron.*;
 
@@ -61,7 +62,7 @@ public class SurfaceMesh {
 	public void draw() {
 		this.drawAxis();
 		
-		view.beginShape(view.TRIANGLES);
+		view.beginShape(PConstants.TRIANGLES);
 		for(Face<Point_3> f: this.polyhedron3D.facets) {
 			Halfedge<Point_3> e=f.getEdge();
 			Point_3 p=e.vertex.getPoint();
