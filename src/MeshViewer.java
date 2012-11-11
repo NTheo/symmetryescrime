@@ -1,3 +1,5 @@
+import Jcg.geometry.Point_3;
+import Jcg.polyhedron.Vertex;
 import processing.core.*;
 
 
@@ -11,8 +13,10 @@ import processing.core.*;
 public class MeshViewer extends PApplet {
 
 	SurfaceMesh mesh;
-	//String filename="OFF/tri_round_cube.off";
-	String filename="OFF/tri_triceratops.off";
+	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath
+	//String filename="src/OFF/tri_round_cube.off";
+	String filename="src/OFF/tri_triceratops.off";
+	Sampling sample;
 
 	public void setup() {
 		size(800,600,P3D);
@@ -22,8 +26,27 @@ public class MeshViewer extends PApplet {
 
 		this.mesh=new SurfaceMesh(this, filename);
 		this.mesh.polyhedron3D.isValid(false);
+		
+		this.sample = new RandomSampling(this.mesh.polyhedron3D);
 	}
 
+	public void displaySample(){
+		float s = (float) this.mesh.scaleFactor;
+		for(Vertex<Point_3> v : this.sample.vertices){		
+			pushMatrix();
+			translate((float)(double) v.getPoint().x*s, (float)(double) v.getPoint().y*s,(float)(double) v.getPoint().z*s);
+			stroke(255);
+			sphere(s/5.f);
+			popMatrix();
+		}
+	}
+	
+	public void displaySample2(){
+		for(Vertex<Point_3> v : this.sample.vertices){
+			this.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
+		}
+	}
+	
 	public void draw() {
 		background(0);
 		//this.lights();
@@ -38,16 +61,9 @@ public class MeshViewer extends PApplet {
 		this.strokeWeight(1);
 		stroke(150,150,150);
 
+		displaySample2();
+		
 		this.mesh.draw();
-	}
-
-	/**
-	 * For running the PApplet as Java application
-	 */
-	public static void main(String args[]) {
-		//PApplet pa=new MeshViewer();
-		//pa.setSize(400, 400);
-		PApplet.main(new String[] { "MeshViewer" });
 	}
 
 }

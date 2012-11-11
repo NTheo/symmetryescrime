@@ -13,16 +13,17 @@ import Jcg.polyhedron.Vertex;
 public class RandomSampling extends Sampling {
 	
 	public RandomSampling(Polyhedron_3<Point_3> polyhedron) {
-		this.sample=new LinkedList<Vertex<Point_3>>();
-		int vertices=polyhedron.sizeOfVertices();
-		for(int i=0;i<vertices*Parameters.samplingRatio;i++){
-			sample.add(polyhedron.vertices.get((int) Math.random()*vertices));
+		this.vertices=new LinkedList<Vertex<Point_3>>();
+		int psv=polyhedron.sizeOfVertices();
+		for(int i=0;i<psv*Parameters.samplingRatio;i++){
+			vertices.add(polyhedron.vertices.get((int) (Math.random()*psv)));
 		}
+		System.out.println("Sampling : "+vertices.size()+" points selected.");
 	}
 
 	@Override
 	void displaySample() {
-		// TODO Auto-generated method stub
+		
 	}
 
 
