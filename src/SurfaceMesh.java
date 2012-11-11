@@ -121,7 +121,7 @@ public class SurfaceMesh {
 			double distance=Math.sqrt(v.getPoint().squareDistance(origin).doubleValue());
 			maxDistance=Math.max(maxDistance, distance);
 		}
-		return Math.sqrt(3)/maxDistance*150;
+		return Math.sqrt(3)/maxDistance*300;
 	}
 	
 }

@@ -7,17 +7,20 @@ import Jcg.polyhedron.Vertex;
  *
  */
 public abstract class Sign {
-	protected static final double threshold = 0.75; //0.75 to be replaced by sth like "MagicNumbers.pruningThreshold"
-	protected static final double radius = 10.; //idem
-	
+
+	protected static final double threshold = Parameters.pruningThreshold;
+	protected static final double radius = Parameters.curvatureCalculationRadius; 
+
 	Sign(){}
-	
+
 	abstract void computeSign(SurfaceMesh m, Vertex<Point_3> v);
+
+	// Pruning : returns false if the point having this signature must be discarded
 	abstract boolean isValid(); 
 
 	double[] signatures(SurfaceMesh m, Vertex<Point_3> v){
 		//TODO to do
 		return new double[2];
 	}
-	
-	}
+
+}
