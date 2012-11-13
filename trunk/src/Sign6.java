@@ -11,7 +11,7 @@ public class Sign6 extends Sign {
 	public double k1;
 	public double k2; //according to the paper, k2>=k1
 	
-	void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
+	public void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
 		double[] k = super.signatures(m, v);
 		if(k[0]>k[1]){
 			k1 = k[1];
@@ -22,7 +22,7 @@ public class Sign6 extends Sign {
 		}
 	}
 
-	boolean isValid() {
+	public boolean isValid() {
 		return (k1>0. && k2/k1 > threshold);
 	}
 
