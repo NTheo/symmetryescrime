@@ -10,7 +10,7 @@ public class Sign7 extends Sign {
 
 	private double r;	// r=k1/k2
 	
-	void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
+	public void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
 		double[] k = super.signatures(m, v);
 		if(k[0]>k[1]){
 			if(k[0]>0.){
@@ -27,7 +27,7 @@ public class Sign7 extends Sign {
 	}
 	}
 
-	boolean isValid() {
+	public boolean isValid() {
 		return r<threshold;
 	}
 
