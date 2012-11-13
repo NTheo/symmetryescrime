@@ -30,21 +30,21 @@ public class MeshViewer extends PApplet {
 		this.sample = new RandomSampling(this.mesh.polyhedron3D);
 	}
 
+	// Display a white segment for each vertex in the sample 
 	public void displaySample(){
-		float s = (float) this.mesh.scaleFactor;
-		for(Vertex<Point_3> v : this.sample.vertices){		
-			pushMatrix();
-			translate((float)(double) v.getPoint().x*s, (float)(double) v.getPoint().y*s,(float)(double) v.getPoint().z*s);
-			stroke(255);
-			sphere(s/5.f);
-			popMatrix();
-		}
-	}
-	
-	public void displaySample2(){
 		for(Vertex<Point_3> v : this.sample.vertices){
 			this.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
 		}
+	}
+	
+	// Display a little sphere for each vertex in the sample - too slow !
+	public void displaySample2(){
+		this.noStroke();
+		this.fill(0f, 0f, 250f);
+		for(Vertex<Point_3> v: this.sample.vertices) {
+			mesh.drawVertex(v.getPoint());
+		}
+		this.strokeWeight(1);
 	}
 	
 	public void draw() {
@@ -61,7 +61,7 @@ public class MeshViewer extends PApplet {
 		this.strokeWeight(1);
 		stroke(150,150,150);
 
-		displaySample2();
+		displaySample();
 		
 		this.mesh.draw();
 	}
