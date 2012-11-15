@@ -13,7 +13,7 @@ public class SurfaceMesh {
 	
 	double scaleFactor=50; // scaling factor: useful for 3d rendering
 	MeshViewer view;
-	public Polyhedron_3<Point_3> polyhedron3D; // triangle mesh
+	public Polyhedron_3 polyhedron3D; // triangle mesh
 	
 	/**
 	 * Create a surface mesh from an OFF file
@@ -23,7 +23,7 @@ public class SurfaceMesh {
 
 		// shared vertex representation of the mesh
     	SharedVertexRepresentation sharedVertex=new SharedVertexRepresentation(filename);
-    	LoadMesh<Point_3> load3D=new LoadMesh<Point_3>();
+    	LoadMesh load3D=new LoadMesh();
     	
     	polyhedron3D=load3D.createTriangleMesh(sharedVertex.points,sharedVertex.faceDegrees,
 				sharedVertex.faces,sharedVertex.sizeHalfedges);
@@ -76,11 +76,11 @@ public class SurfaceMesh {
 		this.drawAxis();
 		
 		view.beginShape(PConstants.TRIANGLES);
-		for(Face<Point_3> f: this.polyhedron3D.facets) {
-			Halfedge<Point_3> e=f.getEdge();
-			Point_3 p=e.vertex.getPoint();
-			Point_3 q=e.getNext().vertex.getPoint();
-			Point_3 r=e.getNext().getNext().vertex.getPoint();
+		for(Face f: this.polyhedron3D.facets) {
+			Halfedge e=f.getEdge();
+			Point_3 p=e.getVertex().getPoint();
+			Point_3 q=e.getNext().getVertex().getPoint();
+			Point_3 r=e.getNext().getNext().getVertex().getPoint();
 			
 			view.noStroke();
 			view.fill(200,200,200,255); // color of the triangle
@@ -90,9 +90,9 @@ public class SurfaceMesh {
 		
 		view.strokeWeight(2); // line width (for edges)
 		view.stroke(20);
-		for(Halfedge<Point_3> e: this.polyhedron3D.halfedges) {
-			Point_3 p=e.vertex.getPoint();
-			Point_3 q=e.opposite.vertex.getPoint();
+		for(Halfedge e: this.polyhedron3D.halfedges) {
+			Point_3 p=e.getVertex().getPoint();
+			Point_3 q=e.getOpposite().getVertex().getPoint();
 			
 			this.drawSegment(p, q); // draw edge (p,q)
 		}
@@ -130,7 +130,7 @@ public class SurfaceMesh {
 			return 1;
 		double maxDistance=0.;
 		Point_3 origin=new Point_3(0., 0., 0.);
-		for(Vertex<Point_3> v: this.polyhedron3D.vertices) {
+		for(Vertex v: this.polyhedron3D.vertices) {
 			double distance=Math.sqrt(v.getPoint().squareDistance(origin).doubleValue());
 			maxDistance=Math.max(maxDistance, distance);
 		}

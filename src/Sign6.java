@@ -1,4 +1,3 @@
-import Jcg.geometry.Point_3;
 import Jcg.polyhedron.Vertex;
 
 /**
@@ -11,7 +10,7 @@ public class Sign6 extends Sign {
 	public double k1;
 	public double k2; //according to the paper, k2>=k1
 	
-	public void computeSign(SurfaceMesh m, Vertex<Point_3> v) {
+	public void computeSign(SurfaceMesh m, Vertex v) {
 		double[] k = super.signatures(m, v);
 		if(k[0]>k[1]){
 			k1 = k[1];

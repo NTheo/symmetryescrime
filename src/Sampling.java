@@ -12,7 +12,7 @@ import Jcg.polyhedron.Vertex;
 public abstract class Sampling {
 
 	// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
-	protected LinkedList<Vertex<Point_3>> vertices;  
+	protected LinkedList<Vertex> vertices;  
 	
 	// Constructor : extract a sample of vertices from the given polyhedron
 	// Sampling(){}	
@@ -20,7 +20,7 @@ public abstract class Sampling {
 	// Display on the model the points of the sample
 	abstract void displaySample();
 	
-	LinkedList<Vertex<Point_3>> sample(){
+	LinkedList<Vertex> sample(){
 		return this.vertices;
 	}
 }

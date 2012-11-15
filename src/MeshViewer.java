@@ -32,7 +32,7 @@ public class MeshViewer extends PApplet {
 
 	// Display a white segment for each vertex in the sample 
 	public void displaySample(){
-		for(Vertex<Point_3> v : this.sample.vertices){
+		for(Vertex v : this.sample.vertices){
 			this.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
 		}
 	}
@@ -41,7 +41,7 @@ public class MeshViewer extends PApplet {
 	public void displaySample2(){
 		this.noStroke();
 		this.fill(0f, 0f, 250f);
-		for(Vertex<Point_3> v: this.sample.vertices) {
+		for(Vertex v: this.sample.vertices) {
 			mesh.drawVertex(v.getPoint());
 		}
 		this.strokeWeight(1);
