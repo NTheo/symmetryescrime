@@ -12,8 +12,8 @@ import Jcg.polyhedron.Vertex;
  */
 public class RandomSampling extends Sampling {
 	
-	public RandomSampling(Polyhedron_3<Point_3> polyhedron) {
-		this.vertices=new LinkedList<Vertex<Point_3>>();
+	public RandomSampling(Polyhedron_3 polyhedron) {
+		this.vertices=new LinkedList<Vertex>();
 		int psv=polyhedron.sizeOfVertices();
 		for(int i=0;i<psv*Parameters.samplingRatio;i++){
 			vertices.add(polyhedron.vertices.get((int) (Math.random()*psv)));
