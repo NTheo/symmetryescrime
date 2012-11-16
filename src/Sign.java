@@ -6,12 +6,11 @@ import Jcg.polyhedron.*;
  * @author Antoine & NTheo (2012)
  *
  */
-public abstract class Sign {
+public interface Sign{
 
-	protected static final double threshold = Parameters.pruningThreshold;
-	protected static final double radius = Parameters.curvatureCalculationRadius; 
+	final double threshold = Parameters.pruningThreshold;
+	final double radius = Parameters.curvatureCalculationRadius; 
 
-	Sign(){}
 	/**
 	 * computes the careterstic signature of the vertex
 	 * @param m the mesh
@@ -22,10 +21,5 @@ public abstract class Sign {
 	 * @return returns true iff the signature is reliable for the computation of transformations 
 	 */
 	abstract public boolean isValid(); 
-
-	protected final double[] signatures(SurfaceMesh m, Vertex v){
-		//TODO to do
-		return new double[2];
-	}
 
 }

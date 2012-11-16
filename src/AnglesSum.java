@@ -6,7 +6,7 @@ import Jcg.polyhedron.Vertex;
  * @author Antoine & NTheo (2012)
  *
  */
-public class AnglesSum extends Sign {
+public class AnglesSum implements Sign {
 
 	private double sum;
 	
