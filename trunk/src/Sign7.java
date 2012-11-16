@@ -6,12 +6,12 @@ import Jcg.polyhedron.Vertex;
  * @author Antoine & NTheo (2012)
  *
  */
-public class Sign7 extends Sign {
+public class Sign7 implements Sign {
 
 	private double r;	// r=k1/k2
 
 	public void computeSign(SurfaceMesh m, Vertex v) {
-		double[] k = super.signatures(m, v);
+		double[] k = v.curvatures(r);
 		if(k[0]>k[1]){
 			if(k[0]>0.){
 				r = k[1]/k[0];

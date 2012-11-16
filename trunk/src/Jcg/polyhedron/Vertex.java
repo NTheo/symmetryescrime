@@ -1,5 +1,10 @@
 package Jcg.polyhedron;
 
+import java.awt.image.SampleModel;
+import java.security.Policy.Parameters;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import Jcg.geometry.*;
 
 
@@ -21,6 +26,26 @@ public int index;
     
     public String toString(){
         return "v"+point.toString();
+    }
+    /**
+     * computes the K (but does not return the principal directions)
+     * @return the k
+     */
+    public double[] curvatures(double radius) {
+    	//TODO return the k
+    	//the queue of vertexes we need to see in our BFS.
+    	Queue<Vertex> q = new LinkedList<Vertex>();
+    	//the current position of our algorithm
+    	Halfedge e; Vertex v; Face f;
+    	q.add(this);
+    	while(!q.isEmpty()){
+    		v = q.poll();
+    		e = v.halfedge;
+    		f = e.face;
+    		
+    	}
+    	return new double[2];
+    	
     }
 }
 
