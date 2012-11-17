@@ -1,5 +1,7 @@
 package Jcg.geometry;
 
+import Jama.Matrix;
+
 public class Vector_3 extends Vector_2 {
   public Double z;
 
@@ -88,7 +90,11 @@ public class Vector_3 extends Vector_2 {
   					 z*b.getCartesian(0).doubleValue()-x*b.getCartesian(2).doubleValue(),
   					 x*b.getCartesian(1).doubleValue()-y*b.getCartesian(0).doubleValue());
   }
-
+  /**
+   * @author Antoine & NTheo
+   * @param b the other vector
+   * @return the angle between the two vectors
+   */
   public double angle(Vector_3 b){
 	  double l = this.squaredLength().doubleValue();
 	  double bl = b.squaredLength().doubleValue();
@@ -98,7 +104,14 @@ public class Vector_3 extends Vector_2 {
 	  }
 	  return Math.acos(this.innerProduct(b).doubleValue()/Math.sqrt(l*bl));
   }
-  
+  public Matrix toColumn(){
+	  double[] v = {this.x, this.y, this.z};
+	  return new Matrix(v, 3);
+  }
+  public Matrix toLine(){
+	  double[] v = {this.x, this.y, this.z};
+	  return new Matrix(v, 1);
+  }
 }
 
 

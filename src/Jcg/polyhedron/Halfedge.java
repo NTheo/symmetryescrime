@@ -1,5 +1,6 @@
  package Jcg.polyhedron;
 
+import Jama.Matrix;
 import Jcg.geometry.Vector_3;
 
 
@@ -16,8 +17,8 @@ Halfedge next;
 Halfedge opposite;
 Vertex vertex;
 
-public Halfedge prev;
-public Face face;
+Halfedge prev;
+Face face;
 public int tag;
 public int index;
 
@@ -41,15 +42,7 @@ public int index;
 		return new Vector_3(this.getOpposite().getVertex().getPoint(), this.getVertex().getPoint());
 	}
 	
-	/**
-	 * @author Antoine & NTheo
-	 * @return beta as defined by Alliez & Cie
-	 */
-	public double beta(){
-		Vector_3 c = this.getFace().normale().crossProduct(this.getOpposite().getFace().normale());
-		double angle = Math.asin(Math.sqrt(c.squaredLength().doubleValue()));
-		return (c.innerProduct(this.vector()).doubleValue()<0)?-angle:angle;
-	}
+
 	public double angle(){
 		return this.vector().opposite().angle(this.getNext().vector());
 	}
@@ -58,7 +51,12 @@ public int index;
     public String toString(){
     	return "("+opposite.getVertex().getPoint()+" - "+vertex.getPoint()+")";
     }
-    
+    public Matrix toColumn(){
+    	return this.vector().toColumn();
+    }
+    public Matrix toLine(){
+    	return this.vector().toLine();
+    }
 }
 
 

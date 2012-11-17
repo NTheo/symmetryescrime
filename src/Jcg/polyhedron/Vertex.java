@@ -27,26 +27,6 @@ public int index;
     public String toString(){
         return "v"+point.toString();
     }
-    /**
-     * computes the K (but does not return the principal directions)
-     * @return the k
-     */
-    public double[] curvatures(double radius) {
-    	//TODO return the k
-    	//the queue of vertexes we need to see in our BFS.
-    	Queue<Vertex> q = new LinkedList<Vertex>();
-    	//the current position of our algorithm
-    	Halfedge e; Vertex v; Face f;
-    	q.add(this);
-    	while(!q.isEmpty()){
-    		v = q.poll();
-    		e = v.halfedge;
-    		f = e.face;
-    		
-    	}
-    	return new double[2];
-    	
-    }
 }
 
 
