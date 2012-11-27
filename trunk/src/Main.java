@@ -18,7 +18,8 @@ public class Main extends MeshViewer {
 	public void setup() {
 		super.setup();	
 		
-		this.sample = new RandomSampling(this.mesh.polyhedron3D);
+		//this.sample = new RandomSampling(this.mesh.polyhedron3D);
+		this.sample = new UniformSampling(this.mesh.polyhedron3D);
 	}
 	
 	
