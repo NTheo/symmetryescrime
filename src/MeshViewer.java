@@ -15,7 +15,7 @@ public class MeshViewer extends PApplet {
 	SurfaceMesh mesh;
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath
 	//String filename="src/OFF/tri_round_cube.off";
-	String filename="src/OFF/tri_triceratops.off";
+	String filename="OFF/tri_triceratops.off";
 	Sampling sample;
 
 	public void setup() {
@@ -31,14 +31,14 @@ public class MeshViewer extends PApplet {
 	}
 
 	// Display a white segment for each vertex in the sample 
-	public void displaySample(){
+	public void displaySample0(){
 		for(Vertex v : this.sample.vertices){
 			this.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
 		}
 	}
 	
 	// Display a little sphere for each vertex in the sample - too slow !
-	public void displaySample2(){
+	public void displaySample(){
 		this.noStroke();
 		this.fill(0f, 0f, 250f);
 		for(Vertex v: this.sample.vertices) {

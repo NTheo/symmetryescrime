@@ -132,4 +132,19 @@ public class Signature{
     	}
     }
 
+    /**
+     * @param s the second signature
+     * @return the square of the distance between the signatures in Omega6
+     */
+    public double distance6(Signature s){
+    	return (s.principalCurvature2 - this.principalCurvature2)*(s.principalCurvature2 - this.principalCurvature2)
+    			+(s.principalCurvature1 - this.principalCurvature1)*(s.principalCurvature1 - this.principalCurvature1);
+    }
+    /**
+     * @param s the second signature
+     * @return the square of the distance between the signatures in Omega7
+     */
+    public double distance7(Signature s){
+    	return Math.pow((s.principalCurvature2/s.principalCurvature1)-(this.principalCurvature2/this.principalCurvature1), 2);
+    }
 }
