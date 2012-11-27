@@ -24,6 +24,7 @@ public class Signature{
 	private double principalCurvature1;
 	private double principalCurvature2;
 	
+	private Vertex vRoot;
 	/**
 	 * @return returns true iff the signature is reliable for the computation of transformations 
 	 */
@@ -47,7 +48,7 @@ public class Signature{
     	//the queue of vertexes we need to see in our BFS.
     	Queue<Vertex> q = new LinkedList<Vertex>();
     	Point_3 pRoot = vRoot.getPoint();
-    	
+    	this.vRoot = vRoot;
     	//the current position of our algorithm
     	Halfedge e0; Halfedge e; Vertex v; Face f;
     	

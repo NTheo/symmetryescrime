@@ -12,7 +12,9 @@ public class SignatureMap {
 	List<Signature> m = new LinkedList<Signature>();
 	public SignatureMap(Sampling s){
 		for(Vertex v:s.vertices){
-			m.add(new Signature(v));
+			Signature sign = new Signature(v);
+			if(sign.isValid())
+				m.add(new Signature(v));
 		}
 	}
 }
