@@ -25,6 +25,16 @@ public class Signature{
 	private double principalCurvature2;
 	
 	private Vertex vRoot;
+	
+	public Vertex getVertex(){
+		return this.vRoot;
+	}
+	
+	public Vector_3 getNormale(){
+		return this.normale;
+	}
+	
+	
 	/**
 	 * @return returns true iff the signature is reliable for the computation of transformations 
 	 */
