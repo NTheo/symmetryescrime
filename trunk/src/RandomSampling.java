@@ -16,10 +16,14 @@ public class RandomSampling extends Sampling {
 		// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
 		this.vertices=new LinkedList<Vertex>();
 		int psv=polyhedron.sizeOfVertices();
-		for(int i=0;i<psv*Parameters.samplingRatio;i++){
-			vertices.add(polyhedron.vertices.get((int) (Math.random()*psv)));
+		Vertex v;
+		while(this.vertices.size()<psv*Parameters.samplingRatio){
+			v=polyhedron.vertices.get((int) (Math.random()*psv));
+			while(vertices.contains(v))
+				v=polyhedron.vertices.get((int) (Math.random()*psv));
+			vertices.add(v);
 		}
-		System.out.println("Sampling : "+vertices.size()+" points selected.");
+		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+"%)");
 	}
 
 	@Override
