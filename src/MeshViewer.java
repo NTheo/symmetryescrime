@@ -1,5 +1,3 @@
-import Jcg.geometry.Point_3;
-import Jcg.polyhedron.Vertex;
 import processing.core.*;
 
 
@@ -13,41 +11,18 @@ import processing.core.*;
 public class MeshViewer extends PApplet {
 
 	SurfaceMesh mesh;
-	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath
-	//String filename="src/OFF/tri_round_cube.off";
-	String filename="OFF/tri_triceratops.off";
-	Sampling sample;
 
 	public void setup() {
 		size(800,600,P3D);
 
 		@SuppressWarnings("unused")
 		ArcBall arcball = new ArcBall(this);
-
-		this.mesh=new SurfaceMesh(this, filename);
-		this.mesh.polyhedron3D.isValid(false);
 		
-		this.sample = new RandomSampling(this.mesh.polyhedron3D);
-	}
-
-	// Display a white segment for each vertex in the sample 
-	public void displaySample0(){
-		for(Vertex v : this.sample.vertices){
-			this.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
-		}
+		this.mesh=new SurfaceMesh(this, args[0]);
+		//this.mesh.polyhedron3D.isValid(false);
 	}
 	
-	// Display a little sphere for each vertex in the sample - too slow !
-	public void displaySample(){
-		this.noStroke();
-		this.fill(0f, 0f, 250f);
-		for(Vertex v: this.sample.vertices) {
-			mesh.drawVertex(v.getPoint());
-		}
-		this.strokeWeight(1);
-	}
-	
-	public void draw() {
+	public void draw(){
 		background(0);
 		//this.lights();
 		directionalLight(101, 204, 255, -1, 0, 0);
@@ -60,10 +35,5 @@ public class MeshViewer extends PApplet {
 		translate(width/2.f,height/2.f,-1*height/2.f);
 		this.strokeWeight(1);
 		stroke(150,150,150);
-
-		displaySample();
-		
-		this.mesh.draw();
 	}
-
 }
