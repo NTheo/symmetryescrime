@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 
-import Jcg.geometry.Point_3;
 import Jcg.polyhedron.Polyhedron_3;
 import Jcg.polyhedron.Vertex;
 
@@ -23,13 +22,7 @@ public class RandomSampling extends Sampling {
 				v=polyhedron.vertices.get((int) (Math.random()*psv));
 			vertices.add(v);
 		}
-		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+"%)");
+		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+" %)");
 	}
-
-	@Override
-	void displaySample() {
-		
-	}
-
 
 }
