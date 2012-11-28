@@ -141,6 +141,9 @@ public class Point_3 implements Point_ {
 	  return 0;
   }
 
+  public Point_3 plus(Vector_3 v){
+	  return new Point_3(this.x+v.x, this.y+v.y, this.z+v.z);
+  }
   
 }
 
