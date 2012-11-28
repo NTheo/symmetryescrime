@@ -33,6 +33,8 @@ public class Main extends MeshViewer {
 		sample.display2(this);
 		//signatures.display(this);
 		this.mesh.draw();
+
+		this.signatures.display(this);
 	}
 	
 	

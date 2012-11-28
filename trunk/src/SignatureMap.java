@@ -29,7 +29,15 @@ public class SignatureMap {
 		for(Signature s : this.m){
 			p=s.getVertex().getPoint();
 			n=s.getNormale();
+			System.out.println(n.x);
+			System.out.println(n.y);
+			System.out.println(n.z);
 			MV.mesh.drawSegment(p, new Point_3(p.x+n.x,p.y+n.y,p.z+n.z));
+			/*Vector_3 d1 = s.getPrincipalDirection1().multiplyByScalar(s.getPrincipalCurvature1()/100);
+			Vector_3 d2 = s.getPrincipalDirection2().multiplyByScalar(s.getPrincipalCurvature2()/100);
+			MV.mesh.drawSegment(p, p.plus(d1));
+			MV.mesh.drawSegment(p, p.plus(d2));*/
+
 		}
 	}
 }

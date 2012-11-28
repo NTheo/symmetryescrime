@@ -54,7 +54,7 @@ public class Signature{
 	
 	
     public Signature(Vertex vRoot) {
-    	//TODO complete
+    	nOC++;
     	//the queue of vertexes we need to see in our BFS.
     	Queue<Vertex> q = new LinkedList<Vertex>();
     	Point_3 pRoot = vRoot.getPoint();
@@ -67,14 +67,26 @@ public class Signature{
     	Matrix M = new Matrix(3, 3);
     	q.add(vRoot);
     	while(!q.isEmpty()){ //loop on the points of the zone
+    		
     		v = q.poll();
     		e0 = v.getHalfedge();
     		e = v.getHalfedge();
     		do{ //loop on the edges that go to this point
+		    	System.out.println(M.get(0,0));
+		    	System.out.println(M.get(0,1));
+		    	System.out.println(M.get(0,2));
+		    	System.out.println(M.get(1,0));
+		    	System.out.println(M.get(1,1));
+		    	System.out.println(M.get(1,2));
+		    	System.out.println(M.get(2,0));
+		    	System.out.println(M.get(2,1));
+		    	System.out.println(M.get(2,2));
     			if(e.tag<nOC){ //this edge has not yet been seen
+    				System.out.println("iyfgutyfoutfouyfouyhbjb");
     				e.tag = nOC;
     				e.getOpposite().tag = nOC;
     				M=M.plus(e.toColumn().times(e.toLine()).times(betaAngle(e)/Math.sqrt(e.vector().squaredLength().doubleValue())));
+
     				f = e.getFace();
     				if(f.tag<nOC){ //this face has not yet been seen
     					f.tag = nOC;
@@ -90,8 +102,10 @@ public class Signature{
     			e = e.getOpposite();
     		}while(e!=e0);
     	}
+
     	M=M.times(1./area);
     	EigenvalueDecomposition evd = M.eig();
+
     	double d0 = evd.getD().get(0, 0);
     	double d1 = evd.getD().get(1, 1);
     	double d2 = evd.getD().get(2, 2);
@@ -141,6 +155,8 @@ public class Signature{
     			this.principalCurvature2 = d0;   			
     		}    		
     	}
+
+		System.out.println("ugoiyvg");
     }
 
     /**
@@ -158,4 +174,27 @@ public class Signature{
     public double distance7(Signature s){
     	return Math.pow((s.principalCurvature2/s.principalCurvature1)-(this.principalCurvature2/this.principalCurvature1), 2);
     }
+
+	/**
+	 * @return the principalDirection1
+	 */
+	public Vector_3 getPrincipalDirection1() {
+		return principalDirection1;
+	}
+
+
+	/**
+	 * @return the principalDirection2
+	 */
+	public Vector_3 getPrincipalDirection2() {
+		return principalDirection2;
+	}
+
+	public double getPrincipalCurvature1() {
+		return principalCurvature1;
+	}
+
+	public double getPrincipalCurvature2() {
+		return principalCurvature2;
+	}
 }
