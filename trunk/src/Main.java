@@ -19,9 +19,8 @@ public class Main extends MeshViewer {
 	public void setup() {
 		super.setup();	
 		
-		System.out.println("Extracting sample...");
 		this.sample = new UniformSampling(this.mesh.polyhedron3D);
-		System.out.println("Computing signatures...");
+
 		this.signatures = new SignatureMap(this.sample);
 	}
 	
@@ -30,10 +29,8 @@ public class Main extends MeshViewer {
 	public void draw(){
 		super.draw();
 
-		sample.display2(this);
-		//signatures.display(this);
 		this.mesh.draw();
-
+		//this.sample.display2(this);
 		this.signatures.display(this);
 	}
 	

@@ -45,7 +45,8 @@ public class UniformSampling extends Sampling {
 		return false;
 	}
 	
-	public UniformSampling(Polyhedron_3 polyhedron) {	
+	public UniformSampling(Polyhedron_3 polyhedron) {
+		System.out.print("Extracting sample...");
 		// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
 		this.vertices=new LinkedList<Vertex>();
 		int psv=polyhedron.sizeOfVertices();
@@ -70,6 +71,7 @@ public class UniformSampling extends Sampling {
 			}
 			vertices.add(v);
 		}
+		System.out.println("ok");
 		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+" %)");
 	}
 
