@@ -72,17 +72,16 @@ public class Signature{
     		e0 = v.getHalfedge();
     		e = v.getHalfedge();
     		do{ //loop on the edges that go to this point
-		    	System.out.println(M.get(0,0));
-		    	System.out.println(M.get(0,1));
-		    	System.out.println(M.get(0,2));
-		    	System.out.println(M.get(1,0));
-		    	System.out.println(M.get(1,1));
-		    	System.out.println(M.get(1,2));
-		    	System.out.println(M.get(2,0));
-		    	System.out.println(M.get(2,1));
-		    	System.out.println(M.get(2,2));
+//		    	System.out.println(M.get(0,0));
+//		    	System.out.println(M.get(0,1));
+//		    	System.out.println(M.get(0,2));
+//		    	System.out.println(M.get(1,0));
+//		    	System.out.println(M.get(1,1));
+//		    	System.out.println(M.get(1,2));
+//		    	System.out.println(M.get(2,0));
+//		    	System.out.println(M.get(2,1));
+//		    	System.out.println(M.get(2,2));
     			if(e.tag<nOC){ //this edge has not yet been seen
-    				System.out.println("iyfgutyfoutfouyfouyhbjb");
     				e.tag = nOC;
     				e.getOpposite().tag = nOC;
     				M=M.plus(e.toColumn().times(e.toLine()).times(betaAngle(e)/Math.sqrt(e.vector().squaredLength().doubleValue())));
@@ -155,8 +154,6 @@ public class Signature{
     			this.principalCurvature2 = d0;   			
     		}    		
     	}
-
-		System.out.println("ugoiyvg");
     }
 
     /**

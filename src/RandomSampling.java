@@ -12,6 +12,7 @@ import Jcg.polyhedron.Vertex;
 public class RandomSampling extends Sampling {
 	
 	public RandomSampling(Polyhedron_3 polyhedron) {
+		System.out.print("Extracting sample...");
 		// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
 		this.vertices=new LinkedList<Vertex>();
 		int psv=polyhedron.sizeOfVertices();
@@ -24,6 +25,7 @@ public class RandomSampling extends Sampling {
 				v=polyhedron.vertices.get((int) (Math.random()*psv));
 			vertices.add(v);
 		}
+		System.out.println("ok");
 		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+" %)");
 	}
 
