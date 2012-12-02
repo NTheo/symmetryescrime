@@ -34,7 +34,7 @@ public class SignatureMap {
 		}
 	}
 	
-	// display the normal and principal directions for each point
+	// display the normal and principal directions for each point .
 	public void display(MeshViewer MV){
 		Point_3 p;
 		Vector_3 n;
