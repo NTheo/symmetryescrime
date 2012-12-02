@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 import Jcg.geometry.Point_3;
 import Jcg.geometry.Vector_3;
