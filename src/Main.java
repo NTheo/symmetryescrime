@@ -31,7 +31,8 @@ public class Main extends MeshViewer {
 
 		this.mesh.draw();
 		//this.sample.display2(this);
-		this.signatures.display(this);
+		//this.signatures.displayPoints(this);
+		this.signatures.displayNormalized(this);
 	}
 	
 	
