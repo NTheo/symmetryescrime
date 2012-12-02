@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import Jcg.geometry.Point_3;
 import Jcg.geometry.Vector_3;
@@ -34,7 +35,7 @@ public class SignatureMap {
 		}
 	}
 	
-	// display the normal and principal directions for each point .
+	// display the normal and principal directions for each point 
 	public void display(MeshViewer MV){
 		Point_3 p;
 		Vector_3 n;
@@ -67,9 +68,15 @@ public class SignatureMap {
 			Vector_3 d2 = s.getPrincipalDirection2().multiplyByScalar(s.getPrincipalCurvature2());
 			
 			n=n.divisionByScalar(Math.sqrt((Double) n.squaredLength())).multiplyByScalar(scale);
-			d1=d1.divisionByScalar(Math.sqrt((Double) d1.squaredLength())).multiplyByScalar(scale);
-			d2=d2.divisionByScalar(Math.sqrt((Double) d2.squaredLength())).multiplyByScalar(scale);
-						
+			if((Double) d1.squaredLength()!=0.0d)
+				d1=d1.divisionByScalar(Math.sqrt((Double) d1.squaredLength())).multiplyByScalar(scale);
+			else
+				d1=new Vector_3(0,0,0);
+			if((Double) d2.squaredLength()!=0.0d)
+				d2=d2.divisionByScalar(Math.sqrt((Double) d2.squaredLength())).multiplyByScalar(scale);
+			else
+				d2=new Vector_3(0,0,0);
+			
 			MV.stroke(250.0f,250.0f,250.0f);
 			MV.mesh.drawSegment(p, p.plus(n));
 			MV.stroke(250.0f,250.0f,0);
