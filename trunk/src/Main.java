@@ -8,7 +8,7 @@ import processing.core.PApplet;
 @SuppressWarnings("serial")
 public class Main extends MeshViewer {
 
-	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath
+	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
 	//String filename="src/OFF/tri_round_cube.off";
 	static String filename="src/OFF/tri_triceratops.off";
 	Sampling sample;
