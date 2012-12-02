@@ -63,19 +63,50 @@ public class SignatureMap {
 		double scale=.7;
 		for(Signature s : this.m){
 			p=s.getVertex().getPoint();
-			n=s.getNormale();
-			Vector_3 d1 = s.getPrincipalDirection1().multiplyByScalar(s.getPrincipalCurvature1());
-			Vector_3 d2 = s.getPrincipalDirection2().multiplyByScalar(s.getPrincipalCurvature2());
+			n=s.getNormale().normalize();
+			Vector_3 d1 = s.getPrincipalDirection1().normalize();
+			Vector_3 d2 = s.getPrincipalDirection2().normalize();
 			
-			n=n.divisionByScalar(Math.sqrt((Double) n.squaredLength())).multiplyByScalar(scale);
-			if((Double) d1.squaredLength()!=0.0d)
-				d1=d1.divisionByScalar(Math.sqrt((Double) d1.squaredLength())).multiplyByScalar(scale);
-			else
-				d1=new Vector_3(0,0,0);
-			if((Double) d2.squaredLength()!=0.0d)
-				d2=d2.divisionByScalar(Math.sqrt((Double) d2.squaredLength())).multiplyByScalar(scale);
-			else
-				d2=new Vector_3(0,0,0);
+			n=n.multiplyByScalar(scale);
+			d1=d1.multiplyByScalar(scale);
+			d2=d2.multiplyByScalar(scale);
+			
+			MV.stroke(250.0f,250.0f,250.0f);
+			MV.mesh.drawSegment(p, p.plus(n));
+			MV.stroke(250.0f,250.0f,0);
+			MV.mesh.drawSegment(p, p.plus(d1));
+			MV.stroke(0,250.0f,250.0f);
+			MV.mesh.drawSegment(p, p.plus(d2));
+		}
+	}
+	
+	// display the normalized normal and pseudo-normalized principal directions (on a 0.5 to 1 scale)
+	public void displayCustom(MeshViewer MV){
+		Point_3 p;
+		Vector_3 n;
+		MV.strokeWeight(1);	
+		double scale=.7;
+		
+		double min1=Double.MAX_VALUE;
+		double min2=Double.MAX_VALUE;
+		double max1=0;
+		double max2=0;
+		for(Signature s : this.m){
+			min1=Math.min(min1, s.getPrincipalCurvature1());
+			min2=Math.min(min2, s.getPrincipalCurvature2());
+			max1=Math.max(max1, s.getPrincipalCurvature1());
+			max2=Math.max(max2, s.getPrincipalCurvature2());
+		}
+		
+		for(Signature s : this.m){
+			p=s.getVertex().getPoint();
+			n=s.getNormale().normalize();
+			Vector_3 d1 = s.getPrincipalDirection1().normalize();
+			Vector_3 d2 = s.getPrincipalDirection2().normalize();
+			
+			n=n.multiplyByScalar(scale);
+			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(scale);
+			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(scale);
 			
 			MV.stroke(250.0f,250.0f,250.0f);
 			MV.mesh.drawSegment(p, p.plus(n));
