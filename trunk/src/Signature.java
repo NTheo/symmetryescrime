@@ -72,15 +72,6 @@ public class Signature{
     		e0 = v.getHalfedge();
     		e = v.getHalfedge();
     		do{ //loop on the edges that go to this point
-//		    	System.out.println(M.get(0,0));
-//		    	System.out.println(M.get(0,1));
-//		    	System.out.println(M.get(0,2));
-//		    	System.out.println(M.get(1,0));
-//		    	System.out.println(M.get(1,1));
-//		    	System.out.println(M.get(1,2));
-//		    	System.out.println(M.get(2,0));
-//		    	System.out.println(M.get(2,1));
-//		    	System.out.println(M.get(2,2));
     			if(e.tag<nOC){ //this edge has not yet been seen
     				e.tag = nOC;
     				e.getOpposite().tag = nOC;
@@ -153,6 +144,11 @@ public class Signature{
     			this.principalCurvature1 = d2;
     			this.principalCurvature2 = d0;   			
     		}    		
+    	}
+    	if(this.normale.innerProduct(vRoot.getHalfedge().getFace().normale()).doubleValue()<0.){
+    		this.normale = this.normale.opposite();
+    		this.principalDirection1 = this.principalDirection1.opposite();
+    		this.principalDirection2 = this.principalDirection2.opposite();
     	}
     }
 
