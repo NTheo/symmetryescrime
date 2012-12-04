@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-
-import Jcg.geometry.Point_3;
 import Jcg.polyhedron.Polyhedron_3;
 import Jcg.polyhedron.Vertex;
 
@@ -12,50 +9,19 @@ import Jcg.polyhedron.Vertex;
  */
 public class UniformSampling extends Sampling {
 	
-	private double minRadius;
-	
-	private double minDistance(){
-		double min=Double.MAX_VALUE;
-		double distance;
-		Point_3 origin=new Point_3(0., 0., 0.);
-		for(Vertex v:this.vertices){
-			distance=Math.sqrt(v.getPoint().squareDistance(origin).doubleValue());
-			min=Math.min(min,distance);
-		}
-		return min;
-	}
-	
-	private double maxDistance(){
-		double max=0;
-		double distance;
-		Point_3 origin=new Point_3(0., 0., 0.);
-		for(Vertex v:this.vertices){
-			distance=Math.sqrt(v.getPoint().squareDistance(origin).doubleValue());
-			max=Math.max(max,distance);
-		}
-		return max;
-	}
-	
 	private boolean isTooClose(Vertex v){
 		
 		for(Vertex u : this.vertices){
-			if(u.getPoint().distanceFrom(v.getPoint()).doubleValue() < this.minRadius)
+			if(u.getPoint().distanceFrom(v.getPoint()).doubleValue() < this.radius)
 				return true;
 		}
 		return false;
 	}
 	
 	public UniformSampling(Polyhedron_3 polyhedron) {
-		System.out.print("Extracting sample...");
-		// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
-		this.vertices=new LinkedList<Vertex>();
-		int psv=polyhedron.sizeOfVertices();
-		this.size=(int) (psv*Parameters.samplingRatio);
+		super(polyhedron);		
 		
-		// First, we set the minimum radius of the sphere in which each selected vertex should be isolated
-		double distance=(minDistance()+maxDistance())/2;
-		this.minRadius=Math.sqrt(4*distance*distance/this.size);
-		
+		int psv=polyhedron.sizeOfVertices();	
 		Vertex v;
 		while(this.vertices.size()<this.size){
 			v=polyhedron.vertices.get((int) (Math.random()*psv));
@@ -66,7 +32,7 @@ public class UniformSampling extends Sampling {
 				if(retry>50){
 					// Can't find points that far from each others => diminish the radius to the value
 					// for which we are sure to find enough points
-					this.minRadius=Math.sqrt(4*minDistance()*minDistance()/this.size);
+					this.radius=Math.sqrt(4*minDistance()*minDistance()/this.size);
 				}
 			}
 			vertices.add(v);

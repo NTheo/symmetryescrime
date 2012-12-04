@@ -7,6 +7,6 @@
 public class Parameters {
 
 	static final double samplingRatio=0.1;
-	static final double pruningThreshold=0.75;
-	static final double curvatureCalculationRadius=0.2;
+	static final double pruningThreshold=0.75;	
+	static double curvatureCalculationRadius;
 }
