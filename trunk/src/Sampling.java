@@ -17,13 +17,13 @@ public abstract class Sampling {
 	public List<Vertex> vertices; 
 	public int size;
 	public double radius;
-	private Polyhedron_3 polyhedron;
+	protected Polyhedron_3 polyhedron;
 	
 	// Constructor : extract a sample of vertices from the given polyhedron
 	public Sampling(Polyhedron_3 polyhedron){
 		this.polyhedron=polyhedron;
 		
-		System.out.print("Extracting sample...");
+		
 		// NB: we should use Iterator.remove for the pruning, in O(1) instead of O(n) for remove()
 		this.vertices=new LinkedList<Vertex>();
 		int psv=polyhedron.sizeOfVertices();
@@ -34,7 +34,7 @@ public abstract class Sampling {
 		this.radius=Math.sqrt(4*distance*distance/this.size);
 		Parameters.curvatureCalculationRadius=this.radius;
 		System.out.println("radius = "+this.radius);
-		
+		System.out.print("Extracting sample...");
 	}	
 	
 	protected double minDistance(){

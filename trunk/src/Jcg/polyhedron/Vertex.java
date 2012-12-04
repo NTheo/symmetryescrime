@@ -14,7 +14,8 @@ public class Vertex{
 	Point_3 point=null;
 	public int tag;
 	public int index;
-
+	public double d;
+	
 	public Vertex(Point_3 point) { this.point=point; }
 	public Vertex() {}
 
