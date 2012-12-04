@@ -9,8 +9,8 @@ import processing.core.PApplet;
 public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
-	static String filename="src/OFF/tri_round_cube.off";
-	//static String filename="src/OFF/tri_triceratops.off";
+	//static String filename="src/OFF/tri_round_cube.off";
+	static String filename="src/OFF/tri_triceratops.off";
 	Sampling sample;
 	SignatureMap signatures;
 	
@@ -19,7 +19,7 @@ public class Main extends MeshViewer {
 	public void setup() {
 		super.setup();	
 		
-		this.sample = new UniformSampling(this.mesh.polyhedron3D);
+		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 
 		this.signatures = new SignatureMap(this.sample);
 	}

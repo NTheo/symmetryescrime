@@ -9,8 +9,7 @@ import Jcg.polyhedron.Vertex;
  */
 public class UniformSampling extends Sampling {
 	
-	private boolean isTooClose(Vertex v){
-		
+	private boolean isTooClose(Vertex v){		
 		for(Vertex u : this.vertices){
 			if(u.getPoint().distanceFrom(v.getPoint()).doubleValue() < this.radius)
 				return true;
