@@ -23,6 +23,7 @@ public class Signature{
 	private Vector_3 principalDirection2;
 	private double principalCurvature1;
 	private double principalCurvature2;
+	private boolean looksOK = true;
 	
 	private Vertex vRoot;
 	
@@ -39,7 +40,7 @@ public class Signature{
 	 * @return returns true iff the signature is reliable for the computation of transformations 
 	 */
 	public boolean isValid() {
-		return (principalCurvature2>0. && principalCurvature1/principalCurvature2 < threshold);
+		return (looksOK && principalCurvature2>0. && principalCurvature1/principalCurvature2 < threshold);
 	}
 	
 	
@@ -55,6 +56,7 @@ public class Signature{
 	
     public Signature(Vertex vRoot) {
     	nOC++;
+    	//System.out.println("computing signature for vertex number " + nOC);
     	//the queue of vertexes we need to see in our BFS.
     	Queue<Vertex> q = new LinkedList<Vertex>();
     	Point_3 pRoot = vRoot.getPoint();
@@ -150,6 +152,7 @@ public class Signature{
     		this.principalDirection1 = this.principalDirection1.opposite();
     		this.principalDirection2 = this.principalDirection2.opposite();
     	}
+    	looksOK = this.normale.innerProduct(vRoot.getHalfedge().getFace().normale()).doubleValue()>0.35;  	
     }
 
     /**

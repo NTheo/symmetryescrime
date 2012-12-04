@@ -84,7 +84,7 @@ public class SignatureMap {
 		Point_3 p;
 		Vector_3 n;
 		MV.strokeWeight(1);	
-		double scale=.7;
+		double scale=Parameters.curvatureCalculationRadius*1.;
 		
 		double min1=Double.MAX_VALUE;
 		double min2=Double.MAX_VALUE;
@@ -103,6 +103,12 @@ public class SignatureMap {
 			Vector_3 d1 = s.getPrincipalDirection1().normalize();
 			Vector_3 d2 = s.getPrincipalDirection2().normalize();
 			
+			MV.noStroke();
+			MV.fill(250.f,250.f,250.f);
+			float a = (float)Math.sqrt(MV.mesh.scaleFactor);
+			MV.translate(a*p.x.floatValue(), a*p.y.floatValue(), a*p.z.floatValue());
+			MV.sphere(a*10*(float)Parameters.curvatureCalculationRadius);
+			MV.translate(-a*p.x.floatValue(), -a*p.y.floatValue(), -a*p.z.floatValue());
 			n=n.multiplyByScalar(scale);
 			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(scale);
 			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(scale);
