@@ -23,7 +23,7 @@ public class Main extends MeshViewer {
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 
 		this.signatures = new SignatureMap(this.sample);
-		KdTree<Signature> omega=new KdTree.SqrEuclid<>(2, this.signatures.m.size());
+		KdTree<Signature> omega=new KdTree.SqrEuclid<Signature>(2, this.signatures.m.size());
 		for(Signature s:this.signatures.m)
 			omega.addPoint(new double[]{s.getPrincipalCurvature1(),s.getPrincipalCurvature2()}, s);
 		omega.nearestNeighbor(new double[]{42,42}, 10, true);
