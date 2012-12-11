@@ -14,7 +14,7 @@ import Jcg.polyhedron.*;
 public class Signature{
 
 	final double threshold = Parameters.pruningThreshold;
-	final double radius = Parameters.curvatureCalculationRadius;
+	final double radius = Parameters.radius;
 	
 	private static int nOC = 0; // to avoid reinitializing the tags (see constructor)
 	
