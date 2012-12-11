@@ -35,10 +35,11 @@ public class Main extends MeshViewer {
 		super.draw();
 
 		this.mesh.draw();
-		//this.sample.display2(this);
+		this.sample.displaySpheres(this);
 		//this.signatures.displayPoints(this);
 		//this.signatures.displayNormalized(this);
 		this.signatures.displayCustom(this);
+		//this.signatures.displaySpheres(this);
 	}
 	
 	

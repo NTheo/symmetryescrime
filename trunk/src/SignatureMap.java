@@ -84,7 +84,6 @@ public class SignatureMap {
 		Point_3 p;
 		Vector_3 n;
 		MV.strokeWeight(1);	
-		double scale=Parameters.curvatureCalculationRadius*1.;
 		
 		double min1=Double.MAX_VALUE;
 		double min2=Double.MAX_VALUE;
@@ -103,15 +102,9 @@ public class SignatureMap {
 			Vector_3 d1 = s.getPrincipalDirection1().normalize();
 			Vector_3 d2 = s.getPrincipalDirection2().normalize();
 			
-			MV.noStroke();
-			MV.fill(250.f,250.f,250.f);
-			float a = (float)Math.sqrt(MV.mesh.scaleFactor);
-			MV.translate(a*p.x.floatValue(), a*p.y.floatValue(), a*p.z.floatValue());
-			MV.sphere(a*10*(float)Parameters.curvatureCalculationRadius);
-			MV.translate(-a*p.x.floatValue(), -a*p.y.floatValue(), -a*p.z.floatValue());
-			n=n.multiplyByScalar(scale);
-			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(scale);
-			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(scale);
+			n=n.multiplyByScalar(Parameters.radius);
+			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(Parameters.radius);
+			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(Parameters.radius);
 			
 			MV.stroke(250.0f,250.0f,250.0f);
 			MV.mesh.drawSegment(p, p.plus(n));
@@ -119,6 +112,19 @@ public class SignatureMap {
 			MV.mesh.drawSegment(p, p.plus(d1));
 			MV.stroke(0,250.0f,250.0f);
 			MV.mesh.drawSegment(p, p.plus(d2));
+		}
+	}
+	
+	public void displaySpheres(MeshViewer MV){
+		Point_3 p;
+		float scale = (float) MV.mesh.scaleFactor;
+		MV.noStroke();
+		MV.fill(250.f,250.f,250.f);
+		for(Signature s: this.m){
+			p=s.getVertex().getPoint();
+			MV.translate(scale*p.x.floatValue(), scale*p.y.floatValue(), scale*p.z.floatValue());
+			MV.sphere(scale * ((float) Parameters.radius));
+			MV.translate(-scale*p.x.floatValue(), -scale*p.y.floatValue(), -scale*p.z.floatValue());
 		}
 	}
 }

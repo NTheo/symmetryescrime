@@ -8,5 +8,5 @@ public class Parameters {
 
 	static final double samplingRatio=0.1;
 	static final double pruningThreshold=0.75;	
-	static double curvatureCalculationRadius;
+	static double radius;
 }

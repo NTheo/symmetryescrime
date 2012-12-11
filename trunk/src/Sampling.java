@@ -32,7 +32,7 @@ public abstract class Sampling {
 		// We set the minimum radius of the sphere in which each selected vertex should be isolated
 		double distance=(minDistance()+maxDistance())/2;
 		this.radius=Math.sqrt(4*distance*distance/this.size);
-		Parameters.curvatureCalculationRadius=this.radius;
+		Parameters.radius=this.radius;
 		System.out.println("radius = "+this.radius);
 		System.out.print("Extracting sample...");
 	}	
@@ -59,17 +59,20 @@ public abstract class Sampling {
 		return max;
 	}
 	
+	List<Vertex> sample(){
+		return this.vertices;
+	}
 	
 	// Display on the model the points of the sample
 	// Display a white segment for each vertex in the sample 
-	public void display(MeshViewer MV){
+	public void displaySegments(MeshViewer MV){
 		for(Vertex v : this.vertices){
 			MV.mesh.drawSegment(v.getPoint(), new Point_3(v.getPoint().x*1.05,v.getPoint().y*1.05,v.getPoint().z*1.05));
 		}
 	}
 	
 	// Display a little sphere for each vertex in the sample - too slow !
-	public void display2(MeshViewer MV){
+	public void displayPoints(MeshViewer MV){
 		MV.noStroke();
 		MV.fill(250f, 250f, 0f);
 		for(Vertex v: this.vertices) {
@@ -78,7 +81,17 @@ public abstract class Sampling {
 		MV.strokeWeight(1);
 	}
 	
-	List<Vertex> sample(){
-		return this.vertices;
+	// Display a sphere the size of Parameters.radius at each point
+	public void displaySpheres(MeshViewer MV){
+		Point_3 p;
+		float scale = (float) MV.mesh.scaleFactor;
+		MV.noStroke();
+		MV.fill(250.f,250.f,250.f);
+		for(Vertex v: this.vertices){
+			p=v.getPoint();
+			MV.translate(scale*p.x.floatValue(), scale*p.y.floatValue(), scale*p.z.floatValue());
+			MV.sphere(scale * ((float) Parameters.radius));
+			MV.translate(-scale*p.x.floatValue(), -scale*p.y.floatValue(), -scale*p.z.floatValue());
+		}
 	}
 }
