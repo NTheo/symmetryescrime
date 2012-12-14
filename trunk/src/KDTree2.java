@@ -280,7 +280,7 @@ public class KDTree2<T> {
 	 * I may have borrowed these from an early version of Red's tree. I however
 	 * forget.
 	 */
-	private static final double pointDistSq(double[] p1, double[] p2) {
+	public static final double pointDistSq(double[] p1, double[] p2) {
 		double d = 0;
 		double q = 0;
 		for (int i = 0; i < p1.length; ++i) {
