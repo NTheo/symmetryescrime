@@ -12,7 +12,7 @@ import java.util.List;
 public class KDTree2<T> {
 	protected static final int defaultBucketSize = 48;
 
-	private final int dimensions;
+	public final int dimensions;
 	private final int bucketSize;
 	private NodeKD root;
 

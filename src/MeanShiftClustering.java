@@ -4,6 +4,7 @@ import java.io.*;
 import java.math.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.awt.Color;
 
@@ -21,28 +22,32 @@ public class MeanShiftClustering {
     double sqInflRad;  // influence radius
     double sqMergeRad;  // merging radius
     private double cvgRad;
+    private double inflRad;
+    public List<Cluster> clusters;
     //RangeSearch Rs;  // data structure for nearest neighbor search
 
 
     // Constructors
 
-    void initMSC (KDTree2<Reflection> n, KDTree2<Reflection> s, double cr, double ar, double ir, double mr){
+    void initMSC (KDTree2<Reflection> n, /*KDTree2<Reflection> s,*/ double cr, double ar, double ir, double mr){
 	N = n;
-	seeds = s;
+	/*seeds = s;*/
 	sqCvgRad = cr*cr;
 	sqAvgRad = ar*ar;
 	sqInflRad = ir*ir;
+	cvgRad = cr;
+	inflRad = ir;
 	sqMergeRad = mr*mr;
 	//Rs = new RangeSearch (N);
     }
 
     MeanShiftClustering (KDTree2<Reflection> n, KDTree2<Reflection> s, 
 			 double cr, double ar, double ir, double mr) {
-	initMSC (n,s,cr,ar,ir, mr);
+    		initMSC (n,/*s,*/cr,ar,ir, mr);
     }
 
     MeanShiftClustering (KDTree2<Reflection> n, double bandWidth) {
-	initMSC (n, n, bandWidth*1e-3, bandWidth, bandWidth/4, bandWidth);
+	initMSC (n, /*n,*/ bandWidth*1e-3, bandWidth, bandWidth/4, bandWidth);
     } 
 
     /**
@@ -52,7 +57,7 @@ public class MeanShiftClustering {
      *  - the peak point (at the top of the list)
      */
     private final static int d = 6;
-    public /*KDTree2<Reflection>*/ Reflection detectCluster (Reflection seed, int clusterIndex) { 
+    public /*KDTree2<Reflection>*/ Cluster detectCluster (Reflection seed, int clusterIndex) { 
     	List<Reflection> pointsOfPath = new ArrayList<Reflection>();
     	Reflection prev;
     	Reflection next;
@@ -63,10 +68,15 @@ public class MeanShiftClustering {
     	do{
     		prev = next;
     		for(int i = 0; i<d; i++){
-    			low[i] = seed.r[i]-cvgRad;
-    			high[i] = seed.r[i]+cvgRad;
+    			low[i] = prev.r[i]-cvgRad;
+    			high[i] = prev.r[i]+cvgRad;
     		}
-    		List<Reflection> l = N.getRange(low, high);
+    		List<Reflection> closeRef = N.getRange(low, high);
+    		List<Reflection> l = new LinkedList<Reflection>();
+    		for(Reflection re:closeRef){//removing all already-clustered points
+    			if(re.cluster<0)
+    				l.add(re);
+    		}
     		double[] mean = new double[d];
     		double k = (double)l.size();
     		for(Reflection r: l) for(int i=0; i<d; i++){
@@ -75,21 +85,44 @@ public class MeanShiftClustering {
     		next = N.getNearestNeighbors(mean, 1).removeMax();
     		pointsOfPath.add(next);
     	}while(KDTree2.pointDistSq(next.r, prev.r) < sqCvgRad);
-    	return next;
+    	//computing weight of cluster
+    	ArrayList<Reflection> cluster = new ArrayList<Reflection>();
+    	for(Reflection ref: pointsOfPath){
+    		for(int i = 0; i<d; i++){
+    			low[i] = ref.r[i]-inflRad;
+    			high[i] = ref.r[i]+inflRad;
+    		}
+    		List<Reflection> l = N.getRange(low, high);
+    		for(Reflection r:l){
+    			if(!cluster.contains(r)){
+    				cluster.add(r);
+    				r.cluster = clusterIndex;
+    			}
+    		}
+    	}
+    	return new Cluster(next, cluster.size(), cluster);
     }
 
     /**
-     * Cluster merging -- Note: cluster center is at top of cluster cloud
-     * input: 
-     *   - the point cloud to be merge (cluster), containing at the top its center
-     *   - the set (array) of cluster centers
-     * output:
-     *   -1: if no merge is performed
-     *    i: if the input cluster has been associated with the cluster i (already existing)
+     * @param list of clusters to merge
+     * @return true iff no merge has been performed
      */
-//    public int mergeCluster (PointCloud cluster, Point_D[] clusterCenters) {
-//    	throw new Error("Exercice 2.2: a' completer");	
-//    }
+    public boolean mergeCluster(ArrayList<Cluster> clusters){
+    	List<Integer> clustersToRemove = new LinkedList<Integer>();
+    	for(int i = 0; i<clusters.size(); i++) for(int j = i+1; j<clusters.size(); j++){
+    		if(KDTree2.pointDistSq(clusters.get(i).r.r, clusters.get(j).r.r) < sqMergeRad){
+    			if (clusters.get(i).weight>clusters.get(j).weight)
+    				clusters.get(j).r = clusters.get(i).r;
+    			clusters.get(j).r.weight += clusters.get(i).weight;
+    			clusters.get(j).l.addAll(clusters.get(i).l);
+    			clustersToRemove.add(new Integer(i));
+    		}
+    	}
+    	for(Integer I: clustersToRemove){
+    		clusters.remove(I.intValue());
+    	}
+    	return(clustersToRemove.isEmpty());
+    }
 
 
     /**
@@ -100,10 +133,26 @@ public class MeanShiftClustering {
      *   - first i elements are cluster centers (non null points)
      *   - remaining n-i elements must be null
      */
-//    public Point_D[] detectClusters () {
-//    	throw new Error("Exercice 2.3: a' completer");
-
-//    }
+    MeanShiftClustering(KDTree2<Reflection> n){
+    	N = n;
+    	initMSC(n, Parameters.clusterRadius, 0., Parameters.clusterRadius*2/3., Parameters.clusterRadius*3.);
+    	double[] low = new double[n.dimensions];
+    	double[] high = new double[n.dimensions];
+    	for(int i = 0; i<n.dimensions; i++){
+    		low[i] = -9999.;
+    		high[i] = 9999.;
+    	}
+    	int clusterIndex = 0;
+    	ArrayList<Cluster> clusters = new ArrayList<Cluster>();
+    	for(Reflection r:N.getRange(low, high)){
+    		clusterIndex++;
+    		if(r.cluster<0){
+    			clusters.add(detectCluster(r, clusterIndex));
+    		}
+    	}
+    	do{}while(mergeCluster(clusters));
+    	
+    }
 
     
     
