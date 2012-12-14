@@ -10,6 +10,7 @@ public class Reflection {
 	protected double ny;
 	protected double nz;
 	protected double weight;
+	public int cluster;
 	public double getPx() {
 		return px;
 	}
@@ -52,5 +53,6 @@ public class Reflection {
 		nx = n.x;
 		ny = n.y;
 		nz = n.z;
+		cluster = -1;
 	}
 }
