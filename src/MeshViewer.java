@@ -25,12 +25,15 @@ public class MeshViewer extends PApplet {
 	public void draw(){
 		background(0);
 		//this.lights();
-		directionalLight(101, 204, 255, -1, 0, 0);
-		directionalLight(51, 102, 126, 0, -1, 0);
-		directionalLight(51, 102, 126, 0, 0, -1);
-		directionalLight(102, 50, 126, 1, 0, 0);
-		directionalLight(51, 50, 102, 0, 1, 0);
-		directionalLight(51, 50, 102, 0, 0, 1);
+//		directionalLight(101, 204, 255, -1, 0, 0);
+//		directionalLight(51, 102, 126, 0, -1, 0);
+//		directionalLight(51, 102, 126, 0, 0, -1);
+//		directionalLight(102, 50, 126, 1, 0, 0);
+//		directionalLight(51, 50, 102, 0, 1, 0);
+//		directionalLight(51, 50, 102, 0, 0, 1);
+		directionalLight(150, 150,180, -1, 1, -1);
+		directionalLight(50, 50,50, 1, -1, 1);
+		ambientLight(150,150,150);
 
 		translate(width/2.f,height/2.f,-1*height/2.f);
 		this.strokeWeight(1);
