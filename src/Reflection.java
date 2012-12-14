@@ -3,33 +3,11 @@ import Jcg.geometry.Vector_3;
 
 
 public class Reflection {
-	protected double px;
-	protected double py;
-	protected double pz;
-	protected double nx;
-	protected double ny;
-	protected double nz;
+	public double[] r;
 	protected double weight;
-	public int cluster;
-	public double getPx() {
-		return px;
-	}
-	public double getPy() {
-		return py;
-	}
-	public double getPz() {
-		return pz;
-	}
-	public double getNx() {
-		return nx;
-	}
-	public double getNy() {
-		return ny;
-	}
-	public double getNz() {
-		return nz;
-	}
+	//public int cluster;
 	public Reflection(Signature s1, Signature s2) throws Exception{
+		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
 		n.normalize();
 		if (n.x<=0.){
@@ -47,12 +25,12 @@ public class Reflection {
 		}
 		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
 		Vector_3 point = n.multiplyByScalar(middle.innerProduct(n));
-		px = point.x;
-		py = point.y;
-		pz = point.z;
-		nx = n.x;
-		ny = n.y;
-		nz = n.z;
-		cluster = -1;
+		r[0] = point.x;
+		r[1] = point.y;
+		r[2] = point.z;
+		r[3] = n.x;
+		r[4] = n.y;
+		r[5] = n.z;
+		//cluster = -1;
 	}
 }
