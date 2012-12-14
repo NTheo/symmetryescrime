@@ -112,7 +112,7 @@ public class Vector_3 extends Vector_2 {
 	  double[] v = {this.x, this.y, this.z};
 	  return new Matrix(v, 1);
   }
-  public Vector_3 normalize(){
+  public Vector_3 normalized(){
 	  if((Double) this.squaredLength()!=0.0d){
 		  Double length=Math.sqrt((Double) this.squaredLength());
 		  return new Vector_3(this.x/length,this.y/length,this.z/length);

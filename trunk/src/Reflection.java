@@ -21,10 +21,10 @@ public class Reflection {
 		return v2;
 	}
 	public int cluster;
-	public Reflection(Signature s1, Signature s2) throws Exception{
+	public Reflection(Signature s1, Signature s2){
 		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
-		n.normalize();
+		n=n.normalized();
 		if (n.x<=0.){
 			if(n.x<0.)
 				n = n.opposite();
@@ -34,20 +34,60 @@ public class Reflection {
 				else if (n.z <= 0.){
 					if(n.z<0)
 						n=n.opposite();
-					else throw new Exception("ouegrzipyrgpZYIFTÜZGÖUZherouHEORUHRQETOUzhtÖUZÖPPP");
+					else{ 
+						System.out.println("Trying to compute a transformation with two identical points !");
+						System.exit(1);
+					}
 				}
 			}
 		}
-		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
-		Vector_3 point = n.multiplyByScalar(middle.innerProduct(n));
-		r[0] = point.x;
-		r[1] = point.y;
-		r[2] = point.z;
+
+//		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
+		Point_3 mid = Point_3.linearCombination(new Point_3[]{s1.getVertex().getPoint(),s2.getVertex().getPoint()},
+				new Number[]{0.5d,0.5d});
+		Vector_3 middle = new Vector_3(new Point_3(0,0,0),mid);
+		Vector_3 proj = n.multiplyByScalar(middle.innerProduct(n));
+		r[0] = proj.x;
+		r[1] = proj.y;
+		r[2] = proj.z;
 		r[3] = n.x;
 		r[4] = n.y;
 		r[5] = n.z;
-		v1 = s1.getVertex();
-		v2 = s2.getVertex();
-		cluster = -1;
+		//cluster = -1;
+	}
+
+	// display the reflection plane
+	public void display(MeshViewer MV){
+		double scale=MV.mesh.scaleFactor;
+		MV.rectMode(2);
+		MV.fill(255,255,255,150);
+		MV.stroke(255,255,255);
+		MV.translate((float) (r[0]*scale),(float) (r[1]*scale), (float) (r[2]*scale));
+		Vector_3 normal = (new Vector_3(r[3],r[4],r[5])).normalized();
+		MV.line((float) (r[0]*scale), (float) (r[1]*scale), (float) (r[2]*scale), 
+				(float) (normal.x * scale *10), (float) (normal.y*scale*10), (float) (normal.z*scale*10));
+
+		float alpha, beta, gamma;
+		if(Math.abs(normal.z) != 1.f){
+			// alpha = - acos(z2/sqrt(1-z3²)
+			alpha = (float) Math.acos(normal.y/Math.sqrt(1-normal.z*normal.z));
+			// beta = acos(z3);
+			beta = (float) Math.acos(-normal.z);  //-z because Processing frame is left-handed
+			// gamma = acos(y3/sqrt(1-z3²)
+			gamma = (float) Math.acos(normal.x/Math.sqrt(1-normal.z*normal.z));
+		}
+		else{
+			// do nothing : the normal and the z axis are already aligned
+			alpha=0.f;
+			gamma=0.f;
+			beta= (float) Math.acos(-normal.z);
+		}
+
+		MV.rotateZ(alpha);
+		MV.rotateX(beta);
+		MV.rotateZ(gamma);
+
+		MV.rect(0,0,(float) (scale*Parameters.maxDistance), (float) (scale *Parameters.maxDistance));
 	}
 }
+

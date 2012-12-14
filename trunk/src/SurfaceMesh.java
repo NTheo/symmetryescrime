@@ -65,7 +65,7 @@ public class SurfaceMesh {
 		float z1=(float)p.getZ().doubleValue()*s;
 		
 		view.translate(x1, y1, z1);
-		view.sphere(s/25f);
+		view.sphere(s/10f);
 		view.translate(-x1, -y1, -z1);
 	}
 	
@@ -90,12 +90,12 @@ public class SurfaceMesh {
 		
 		view.strokeWeight(2); // line width (for edges)
 		view.stroke(20);
-		for(Halfedge e: this.polyhedron3D.halfedges) {
-			Point_3 p=e.getVertex().getPoint();
-			Point_3 q=e.getOpposite().getVertex().getPoint();
-			
-			this.drawSegment(p, q); // draw edge (p,q)
-		}
+//		for(Halfedge e: this.polyhedron3D.halfedges) {
+//			Point_3 p=e.getVertex().getPoint();
+//			Point_3 q=e.getOpposite().getVertex().getPoint();
+//			
+//			this.drawSegment(p, q); // draw edge (p,q)
+//		}
 		view.strokeWeight(1);
 	}
 	

@@ -62,9 +62,9 @@ public class SignatureMap {
 		double scale=.7;
 		for(Signature s : this.m){
 			p=s.getVertex().getPoint();
-			n=s.getNormale().normalize();
-			Vector_3 d1 = s.getPrincipalDirection1().normalize();
-			Vector_3 d2 = s.getPrincipalDirection2().normalize();
+			n=s.getNormale().normalized();
+			Vector_3 d1 = s.getPrincipalDirection1().normalized();
+			Vector_3 d2 = s.getPrincipalDirection2().normalized();
 			
 			n=n.multiplyByScalar(scale);
 			d1=d1.multiplyByScalar(scale);
@@ -98,9 +98,9 @@ public class SignatureMap {
 		
 		for(Signature s : this.m){
 			p=s.getVertex().getPoint();
-			n=s.getNormale().normalize();
-			Vector_3 d1 = s.getPrincipalDirection1().normalize();
-			Vector_3 d2 = s.getPrincipalDirection2().normalize();
+			n=s.getNormale().normalized();
+			Vector_3 d1 = s.getPrincipalDirection1().normalized();
+			Vector_3 d2 = s.getPrincipalDirection2().normalized();
 			
 			n=n.multiplyByScalar(Parameters.radius);
 			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(Parameters.radius);
