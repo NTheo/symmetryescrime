@@ -1,11 +1,26 @@
 import Jcg.geometry.Point_3;
 import Jcg.geometry.Vector_3;
+import Jcg.polyhedron.Vertex;
 
 
 public class Reflection {
 	public double[] r;
 	protected double weight;
-	//public int cluster;
+	private Vertex v1,v2;
+
+	/**
+	 * @return the v1
+	 */
+	public Vertex getV1() {
+		return v1;
+	}
+	/**
+	 * @return the v2
+	 */
+	public Vertex getV2() {
+		return v2;
+	}
+	public int cluster;
 	public Reflection(Signature s1, Signature s2) throws Exception{
 		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
@@ -31,6 +46,8 @@ public class Reflection {
 		r[3] = n.x;
 		r[4] = n.y;
 		r[5] = n.z;
-		//cluster = -1;
+		v1 = s1.getVertex();
+		v2 = s2.getVertex();
+		cluster = -1;
 	}
 }
