@@ -2,7 +2,9 @@
 
 import java.io.*;
 import java.math.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.awt.Color;
 
 import Jcg.geometry.*;
@@ -18,7 +20,7 @@ public class MeanShiftClustering {
     double sqAvgRad;  // averaging radius (definining the window)
     double sqInflRad;  // influence radius
     double sqMergeRad;  // merging radius
-
+    private double cvgRad;
     //RangeSearch Rs;  // data structure for nearest neighbor search
 
 
@@ -49,9 +51,31 @@ public class MeanShiftClustering {
      *  - all the points belonging to the detected cluster
      *  - the peak point (at the top of the list)
      */
-    public KDTree2<Reflection> detectCluster (Reflection seed, int clusterIndex) { 
-    	throw new Error("Exercice 2.1: a' completer");	
-
+    private final static int d = 6;
+    public /*KDTree2<Reflection>*/ Reflection detectCluster (Reflection seed, int clusterIndex) { 
+    	List<Reflection> pointsOfPath = new ArrayList<Reflection>();
+    	Reflection prev;
+    	Reflection next;
+    	next = seed;
+    	pointsOfPath.add(next);
+    	double[] low = new double[d];
+    	double[] high = new double[d];
+    	do{
+    		prev = next;
+    		for(int i = 0; i<d; i++){
+    			low[i] = seed.r[i]-cvgRad;
+    			high[i] = seed.r[i]+cvgRad;
+    		}
+    		List<Reflection> l = N.getRange(low, high);
+    		double[] mean = new double[d];
+    		double k = (double)l.size();
+    		for(Reflection r: l) for(int i=0; i<d; i++){
+    			mean[i]+=r.r[i]/k;
+    		}
+    		next = N.getNearestNeighbors(mean, 1).removeMax();
+    		pointsOfPath.add(next);
+    	}while(KDTree2.pointDistSq(next.r, prev.r) < sqCvgRad);
+    	return next;
     }
 
     /**
