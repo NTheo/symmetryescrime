@@ -73,8 +73,8 @@ public class MeanShiftClustering {
     		}
     		List<Reflection> closeRef = N.getRange(low, high);
     		List<Reflection> l = new LinkedList<Reflection>();
-    		for(Reflection re:closeRef){//removing all already-clustered points
-    			if(re.cluster<0)
+    		for(Reflection re:closeRef){//removing all already-clustered or too far points
+    			if(re.cluster<0 && KDTree2.pointDistSq(re.r, prev.r) < sqCvgRad)
     				l.add(re);
     		}
     		double[] mean = new double[d];
@@ -139,8 +139,8 @@ public class MeanShiftClustering {
     	double[] low = new double[n.dimensions];
     	double[] high = new double[n.dimensions];
     	for(int i = 0; i<n.dimensions; i++){
-    		low[i] = -9999.;
-    		high[i] = 9999.;
+    		low[i] = -Double.MAX_VALUE;
+    		high[i] = Double.MAX_VALUE;
     	}
     	int clusterIndex = 0;
     	ArrayList<Cluster> clusters = new ArrayList<Cluster>();
