@@ -16,6 +16,7 @@ public class Parameters {
 	static float radius;
 	static float minDistance;
 	static float maxDistance;
+	static final double reflectionThreshold=1.;
 	
 	public static void setMinDistance(MeshViewer MV){
 		double min=Double.MAX_VALUE;
