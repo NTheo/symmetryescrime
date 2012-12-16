@@ -20,7 +20,7 @@ public class Reflection {
 	public Vertex getV2() {
 		return v2;
 	}
-	public int cluster;
+	public int cluster=-1;
 	public Reflection(Signature s1, Signature s2){
 		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
@@ -88,6 +88,25 @@ public class Reflection {
 		MV.rotateZ(gamma);
 
 		MV.rect(0,0,(float) (scale*Parameters.maxDistance), (float) (scale *Parameters.maxDistance));
+	}
+	
+	public void display2(MeshViewer mv){
+		Point_3 p = new Point_3(r[0], r[1], r[2]);
+		mv.stroke(250,250,150);
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4], r[3], 0)).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], 0, r[3])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(0, -r[5], r[4])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(r[4], -r[3], 0)).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(r[5], 0, -r[3])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(0, r[5], -r[4])).multiplyByScalar(150.)));
+
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4]-r[5], r[3], r[3])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(r[4], -r[3]-r[5], r[4])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(r[5], r[5], -r[3]-r[4])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(r[4]+r[5], -r[3], -r[3])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4], r[3]+r[5], -r[4])).multiplyByScalar(150.)));
+		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], -r[5], r[3]+r[4])).multiplyByScalar(150.)));
+				
 	}
 }
 
