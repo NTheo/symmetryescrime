@@ -54,7 +54,8 @@ public class Reflection {
 		r[3] = n.x;
 		r[4] = n.y;
 		r[5] = n.z;
-
+		v1 = s1.getVertex();
+		v2 = s2.getVertex();
 		this.valid = n.crossProduct(s1.getNormale()).sum(n.crossProduct(s2.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 	}
 
@@ -127,6 +128,13 @@ public class Reflection {
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4], r[3]+r[5], -r[4])).multiplyByScalar(150.)));
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], -r[5], r[3]+r[4])).multiplyByScalar(150.)));
 				
+	}
+	
+	public void display3(MeshViewer mv){
+		mv.noStroke();
+		mv.fill(this.hashCode()%255,(2*this.hashCode())%255,(3*this.hashCode())%255);
+		mv.mesh.drawVertex(v1.getPoint());
+		mv.mesh.drawVertex(v2.getPoint());
 	}
 }
 
