@@ -37,7 +37,7 @@ public class Main extends MeshViewer {
 				
 		// test reflection
 		List<Signature> list=this.signatures.getSignatures();
-				this.s1=list.get((int)(Math.random()*list.size()));
+		this.s1=list.get((int)(Math.random()*list.size()));
 		this.s2=list.get((int)(Math.random()*list.size()));
 		this.test2 = new Reflection(s1,s2);
 	}
@@ -47,6 +47,7 @@ public class Main extends MeshViewer {
 	public void draw(){
 		super.draw();
 
+		//this.mesh.drawAxis();
 		this.mesh.draw();
 		//this.sample.displaySpheres(this);
 		//this.signatures.displayPoints(this);
@@ -54,29 +55,31 @@ public class Main extends MeshViewer {
 		//this.signatures.displayCustom(this);
 		//this.signatures.displaySpheres(this);
 		
-		//Reflection test = new Reflection(new double[]{0,0,0,0,0,-1});
-//		Vertex v1=new Vertex(new Point_3(-Parameters.maxDistance*this.mesh.scaleFactor,0,0));
-//		Vertex v2=new Vertex(new Point_3(Parameters.maxDistance*this.mesh.scaleFactor,0,0));
+		Vector_3 n = (new Vector_3(.3,.4,.2)).normalized();
+		Vector_3 p = n.multiplyByScalar(2);
+		Reflection test = new Reflection(new double[]{p.x,p.y,p.z,n.x,n.y,n.z});
 
-		ReflectionSpace.display(this.signatures, this);
-		
-		Point_3 p1=s1.getVertex().getPoint();
-		Point_3 p2=s2.getVertex().getPoint();
-		
-		this.stroke(0,0,250);
-		Vector_3 direction = ((Vector_3) p2.minus(p1)).normalized();
-		direction = direction.multiplyByScalar(this.mesh.scaleFactor/6);
-		this.mesh.drawSegment(p1.plus(direction.opposite()), p2.plus(direction));
-		
-		this.noStroke();
-		this.fill(50, 200, 50);		
-		this.mesh.drawVertex(p1);
-		this.mesh.drawVertex(p2);
+//		Point_3 p1=s1.getVertex().getPoint();
+//		Point_3 p2=s2.getVertex().getPoint();
+//		
+//		this.stroke(0,0,250);
+//		Vector_3 direction = ((Vector_3) p2.minus(p1)).normalized();
+//		direction = direction.multiplyByScalar(this.mesh.scaleFactor/6);
+//		this.mesh.drawSegment(p1.plus(direction.opposite()), p2.plus(direction));
+//		
+//		this.noStroke();
+//		this.fill(50, 200, 50);		
+//		this.mesh.drawVertex(p1);
+//		this.mesh.drawVertex(p2);
 
+		this.signatures.displayNeighborsNumber(this);
+				
+		//test.display(this);
 		//this.test2.display2(this);
-		for(int i=0; i<this.clusters.clusters.size(); i++){
-			this.clusters.clusters.get(i).r.display2(this);
-		}
+//		for(int i=0; i<this.clusters.clusters.size(); i++){
+//			this.clusters.clusters.get(i).r.display2(this);
+//		}
+		this.clusters.clusters.get(0).r.display2(this);
 	}
 	
 	
