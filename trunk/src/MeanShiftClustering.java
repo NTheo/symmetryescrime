@@ -139,7 +139,7 @@ public class MeanShiftClustering {
     	double[] low = new double[n.dimensions];
     	double[] high = new double[n.dimensions];
     	for(int i = 0; i<n.dimensions; i++){
-    		low[i] = -Double.MAX_VALUE;
+    		low[i] = Double.MIN_VALUE;
     		high[i] = Double.MAX_VALUE;
     	}
     	int clusterIndex = 0;
