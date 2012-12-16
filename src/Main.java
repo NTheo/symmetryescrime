@@ -9,7 +9,6 @@ import processing.core.PApplet;
  * @author Antoine & NTheo (2012)
  *
  */
-@SuppressWarnings("serial")
 public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
