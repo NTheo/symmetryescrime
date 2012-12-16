@@ -31,7 +31,7 @@ public class Main extends MeshViewer {
 		
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 		this.signatures = new SignatureMap(this.sample);
-		this.reflections = new ReflectionSpace(signatures, this);
+		this.reflections = new ReflectionSpace(signatures);
 				
 		// test reflection
 		List<Signature> list=this.signatures.getSignatures();
@@ -55,6 +55,9 @@ public class Main extends MeshViewer {
 		//Reflection test = new Reflection(new double[]{0,0,0,0,0,-1});
 //		Vertex v1=new Vertex(new Point_3(-Parameters.maxDistance*this.mesh.scaleFactor,0,0));
 //		Vertex v2=new Vertex(new Point_3(Parameters.maxDistance*this.mesh.scaleFactor,0,0));
+
+		ReflectionSpace.display(this.signatures, this);
+		
 		Point_3 p1=s1.getVertex().getPoint();
 		Point_3 p2=s2.getVertex().getPoint();
 		
