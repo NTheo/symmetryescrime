@@ -59,10 +59,10 @@ public class MeanShiftClustering {
 //		cvgRad = cr;
 //		inflRad = ir;
 //		sqMergeRad = mr*mr;
-		sqCvgRad = Parameters.bandwith*0.001;
-		sqAvgRad = Parameters.bandwith;
-		sqInflRad = Parameters.bandwith/4;
-		sqMergeRad = Parameters.bandwith;
+		sqCvgRad = Parameters.bandwidth*0.001;
+		sqAvgRad = Parameters.bandwidth;
+		sqInflRad = Parameters.bandwidth/4;
+		sqMergeRad = Parameters.bandwidth;
 	}
 
 //	MeanShiftClustering (KDTree2<Reflection> n, KDTree2<Reflection> s, 
@@ -92,8 +92,8 @@ public class MeanShiftClustering {
 		do{
 			prev = next;
 			for(int i = 0; i<d; i++){
-				low[i] = prev.r[i]-cvgRad;
-				high[i] = prev.r[i]+cvgRad;
+				low[i] = prev.r[i]-Math.sqrt(sqAvgRad);
+				high[i] = prev.r[i]+Math.sqrt(sqAvgRad);
 			}
 			List<Reflection> closeRef = N.getRange(low, high);
 			List<Reflection> l = new LinkedList<Reflection>();
