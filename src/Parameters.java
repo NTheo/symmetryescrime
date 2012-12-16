@@ -13,10 +13,13 @@ public class Parameters {
 	static final double pruningThreshold=0.75;
 	static final double pairingRatio=0.2;
 	static final double pairingRange=1;
+	static final double clusterRadius = 1.;
+	static final double reflectionThreshold=1.;
+	
 	static float radius;
 	static float minDistance;
 	static float maxDistance;
-	static final double reflectionThreshold=1.;
+
 	
 	public static void setMinDistance(MeshViewer MV){
 		double min=Double.MAX_VALUE;
@@ -46,7 +49,7 @@ public class Parameters {
 		setMinDistance(MV);
 		setMaxDistance(MV);
 	}
-	static final double clusterRadius = 1.;
+
 }
 
 
