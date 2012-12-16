@@ -1,14 +1,7 @@
-
-
-import java.io.*;
-import java.math.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.awt.Color;
 
-import Jcg.geometry.*;
 
 /**
  * This class contains the main methods implementing the Mean-Shift clustering

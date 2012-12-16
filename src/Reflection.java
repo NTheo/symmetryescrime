@@ -1,4 +1,3 @@
-import Jama.Matrix;
 import Jcg.geometry.Point_3;
 import Jcg.geometry.Vector_3;
 import Jcg.polyhedron.Vertex;
@@ -67,24 +66,25 @@ public class Reflection {
 		
 		double scale=MV.mesh.scaleFactor;				
 				
-		MV.noStroke();
-		MV.fill(250,0,0);
+//		MV.noStroke();
+//		MV.fill(255,0,0);
 		MV.translate((float) (r[0]*scale),(float) (r[1]*scale), (float) (r[2]*scale));
-		MV.sphere((float) MV.mesh.scaleFactor/3);
+//		MV.sphere((float) MV.mesh.scaleFactor/3);
 		
 		Vector_3 normal = new Vector_3(r[3],r[4],r[5]);
 		MV.stroke(255,255,255);
-		MV.line(0, 0, 0, (float) (normal.x*scale*10),(float) (normal.y*scale*10),(float) (normal.z*scale*10));
+		//MV.line(0, 0, 0, (float) (normal.x*scale*10),(float) (normal.y*scale*10),(float) (normal.z*scale*10));
 				
 		MV.rectMode(2);
-		MV.fill(255,255,255,150);	
+		MV.fill(128+this.hashCode()*127,128+this.hashCode()%127,128+2*this.hashCode()%127,100);
+		MV.stroke(128+this.hashCode()*127,128+this.hashCode()%127,128+2*this.hashCode()%127);
 		float alpha, beta, gamma;
 		if(Math.abs(normal.z) != 1.f){
-			// alpha = acos(z2/sqrt(1-z3²)
+			// alpha = acos(-z2/sqrt(1-z3²)
 			alpha = (float) Math.acos(-normal.y/Math.sqrt(1-normal.z*normal.z));
 			//alpha=Math.atan2(y, x)
 			// beta = acos(z3);
-			beta = (float) Math.acos(normal.z);  //-z because Processing frame is left-handed
+			beta = (float) Math.acos(normal.z);  // Processing frame is left-handed -> doesn't matter ?
 			// gamma = acos(y3/sqrt(1-z3²)
 			//gamma = (float) Math.acos(-normal.x/Math.sqrt(1-normal.z*normal.z));
 			gamma = (float) Math.acos(0);
@@ -93,27 +93,23 @@ public class Reflection {
 			// the normal and the z axis are already aligned
 			alpha=0.f;
 			gamma=0.f;
-			beta= (float) Math.acos(-normal.z);
+			beta= (float) Math.acos(normal.z);
 		}
 		
-//		Matrix m=new Matrix(3,3);
-//		Matrix origine=new Matrix(new double[]{1,0,0},3);
-//		Matrix dest=new Matrix(new double[]{normal.x,normal.y,normal.z},3);
-//		
 		MV.rotateZ(alpha);
 		MV.rotateX(beta);
 //		MV.rotateZ(gamma);
 		
-		MV.stroke(0,255,255);
-		MV.mesh.drawAxis();
+//		MV.stroke(0,255,255);   // light blue
+//		MV.mesh.drawAxis();
 		
-		MV.rotateX(0.2f);
+//		MV.rotateX(0.2f);
+//		
+//		MV.stroke(255,255,0);   // yellow
+//		MV.mesh.drawAxis();
+//		MV.stroke(255,255,255);
 		
-		MV.stroke(255,255,0);
-		MV.mesh.drawAxis();
-		MV.stroke(255,255,255);
-		
-		MV.rect(0,0,(float) (scale*Parameters.maxDistance), (float) (scale *Parameters.maxDistance));
+		MV.rect(0,0,(float) (scale*Parameters.maxDistance*.7), (float) (scale *Parameters.maxDistance*.7));
 		
 		//MV.rotateZ(-gamma);
 		MV.rotateX(-beta);

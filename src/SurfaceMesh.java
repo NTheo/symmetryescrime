@@ -83,7 +83,7 @@ public class SurfaceMesh {
 			Point_3 r=e.getNext().getNext().getVertex().getPoint();
 			
 			view.noStroke();
-			view.fill(200,200,200,128); // color of the triangle
+			view.fill(200,200,200,150); // color of the triangle
 			this.drawTriangle(p, q, r); // draw a triangle face
 		}
 		view.endShape();
