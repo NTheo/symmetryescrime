@@ -8,6 +8,7 @@ public class Reflection {
 	protected double weight;
 	private Vertex v1,v2;
 	public boolean valid;
+	public double validityValue;
 	/**
 	 * @return the v1
 	 */
@@ -58,6 +59,7 @@ public class Reflection {
 		Vector_3 n2i = 
 			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
+		this.validityValue=(n2i.difference(s1.getNormale())).squaredLength().doubleValue();
 	}
 	
     public Reflection(double[] ds) {
@@ -147,5 +149,39 @@ public class Reflection {
 		mv.mesh.drawSegment(v1.getPoint(), v2.getPoint());
 	}
 
+	public void display4(MeshViewer mv){
+		
+		Point_3 p1=v1.getPoint();
+		Point_3 p2=v2.getPoint();
+		
+		mv.stroke(0,0,250);
+		Vector_3 direction = ((Vector_3) p2.minus(p1)).normalized();
+		direction = direction.multiplyByScalar(mv.mesh.scaleFactor/6);
+		mv.mesh.drawSegment(p1.plus(direction.opposite()), p2.plus(direction));
+		
+		mv.noStroke();
+		mv.fill(50, 200, 50);		
+		mv.mesh.drawVertex(p1);
+		mv.mesh.drawVertex(p2);
+		
+		Signature s1 = new Signature(v1);
+		Signature s2 = new Signature(v2);
+		
+		Vector_3 n1=s1.getNormale().normalized();
+		Vector_3 n2=s2.getNormale().normalized();
+		
+		double scale = mv.mesh.scaleFactor/5;
+		
+		n1=n1.multiplyByScalar(scale);
+		n2=n2.multiplyByScalar(scale);
+
+		mv.stroke(250.0f,250.0f,250.0f);
+		mv.mesh.drawSegment(p1, p1.plus(n1));
+		mv.mesh.drawSegment(p2, p2.plus(n2));
+		
+		System.out.println("Reflection has a validity value of : "+this.validityValue);
+		
+		this.display(mv);
+	}
 }
 
