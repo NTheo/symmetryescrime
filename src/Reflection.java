@@ -129,12 +129,12 @@ public class Reflection {
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], -r[5], r[3]+r[4])).multiplyByScalar(150.)));
 				
 	}
-	
 	public void display3(MeshViewer mv){
 		mv.noStroke();
 		mv.fill(this.hashCode()%255,(2*this.hashCode())%255,(3*this.hashCode())%255);
 		mv.mesh.drawVertex(v1.getPoint());
 		mv.mesh.drawVertex(v2.getPoint());
 	}
+
 }
 
