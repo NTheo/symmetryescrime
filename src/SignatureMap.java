@@ -54,7 +54,7 @@ public class SignatureMap {
 	}
 	
 	// display the normal and principal directions for each point 
-	public void display(MeshViewer MV){
+	public void displayNormals(MeshViewer MV){
 		Point_3 p;
 		Vector_3 n;
 		MV.strokeWeight(1);		
@@ -134,6 +134,7 @@ public class SignatureMap {
 		}
 	}
 	
+	// display sphere with Parameters.radius as a parameter
 	public void displaySpheres(MeshViewer MV){
 		Point_3 p;
 		float scale = (float) MV.mesh.scaleFactor;
@@ -146,4 +147,22 @@ public class SignatureMap {
 			MV.translate(-scale*p.x.floatValue(), -scale*p.y.floatValue(), -scale*p.z.floatValue());
 		}
 	}
+	
+	
+	// For each signature in p, draw a sphere. The darker the color, the less neighbors this signature has in the signature space
+	public void displayNeighborsNumber(MeshViewer mv){
+		List<Signature> neighbors;
+		for(Signature s: this.p){
+			neighbors = this.q.getRange(new double[]{s.getPrincipalCurvature1()-Parameters.pairingRange/2,
+					s.getPrincipalCurvature2()-Parameters.pairingRange/2},
+					new double[]{s.getPrincipalCurvature1()+Parameters.pairingRange/2,
+					s.getPrincipalCurvature2()+Parameters.pairingRange/2});
+			mv.noStroke();
+			mv.fill(6*neighbors.size()%255, 2*neighbors.size()%255, 6*neighbors.size()%255);		
+			mv.mesh.drawVertex(s.getVertex().getPoint());
+		}
+	}
+	
+	
+	
 }
