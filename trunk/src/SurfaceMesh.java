@@ -73,7 +73,7 @@ public class SurfaceMesh {
 	 * Draw the entire mesh
 	 */
 	public void draw() {
-		this.drawAxis();
+		//this.drawAxis();
 		
 		view.beginShape(PConstants.TRIANGLES);
 		for(Face f: this.polyhedron3D.facets) {
@@ -83,7 +83,7 @@ public class SurfaceMesh {
 			Point_3 r=e.getNext().getNext().getVertex().getPoint();
 			
 			view.noStroke();
-			view.fill(200,200,200,255); // color of the triangle
+			view.fill(200,200,200,128); // color of the triangle
 			this.drawTriangle(p, q, r); // draw a triangle face
 		}
 		view.endShape();
@@ -103,7 +103,7 @@ public class SurfaceMesh {
 	 * Draw the X, Y and Z axis
 	 */
 	public void drawAxis() {
-		double s=1;
+		double s=1*this.scaleFactor/5;
 		Point_3 p000=new Point_3(0., 0., 0.);
 		Point_3 p100=new Point_3(s, 0., 0.);
 		Point_3 p010=new Point_3(0.,s, 0.);

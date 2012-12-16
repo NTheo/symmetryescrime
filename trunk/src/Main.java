@@ -47,6 +47,7 @@ public class Main extends MeshViewer {
 		super.draw();
 
 		//this.mesh.drawAxis();
+		this.fill(255,255,255,128);
 		this.mesh.draw();
 		//this.sample.displaySpheres(this);
 		//this.signatures.displayPoints(this);
@@ -54,8 +55,8 @@ public class Main extends MeshViewer {
 		//this.signatures.displayCustom(this);
 		//this.signatures.displaySpheres(this);
 		
-		Vector_3 n = (new Vector_3(.3,.4,.2)).normalized();
-		Vector_3 p = n.multiplyByScalar(2);
+		Vector_3 n = (new Vector_3(.2,.5,.1)).normalized();
+		Vector_3 p = n.multiplyByScalar(5);
 		Reflection test = new Reflection(new double[]{p.x,p.y,p.z,n.x,n.y,n.z});
 
 //		Point_3 p1=s1.getVertex().getPoint();
@@ -71,14 +72,14 @@ public class Main extends MeshViewer {
 //		this.mesh.drawVertex(p1);
 //		this.mesh.drawVertex(p2);
 
-		//this.signatures.displayNeighborsNumber(this);
+//		this.signatures.displayNeighborsNumber(this);
 				
 		//test.display(this);
-		//this.test2.display2(this);
+		//this.test2.display(this);
 //		for(int i=0; i<this.clusters.clusters.size(); i++){
 //			this.clusters.clusters.get(i).r.display2(this);
 //		}
-		this.clusters.clusters.get(0).r.display2(this);
+		//this.clusters.clusters.get(0).r.display2(this);
 
 		for(Reflection r:this.reflections.getRange(
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
