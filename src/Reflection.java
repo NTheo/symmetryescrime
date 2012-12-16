@@ -7,7 +7,7 @@ public class Reflection {
 	public double[] r;
 	protected double weight;
 	private Vertex v1,v2;
-
+	public boolean valid;
 	/**
 	 * @return the v1
 	 */
@@ -92,7 +92,7 @@ public class Reflection {
 	
 	public void display2(MeshViewer mv){
 		Point_3 p = new Point_3(r[0], r[1], r[2]);
-		mv.stroke(250,250,150);
+		mv.stroke(this.hashCode()%255,(2*this.hashCode())%255,(3*this.hashCode())%255);
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4], r[3], 0)).multiplyByScalar(150.)));
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], 0, r[3])).multiplyByScalar(150.)));
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(0, -r[5], r[4])).multiplyByScalar(150.)));
