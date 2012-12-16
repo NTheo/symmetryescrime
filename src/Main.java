@@ -18,6 +18,7 @@ public class Main extends MeshViewer {
 	//static String filename="src/OFF/bunny.off";
 	Sampling sample;
 	SignatureMap signatures;
+	ReflectionSpace reflections;
 	Reflection test2;
 	Signature s1,s2;
 	
@@ -29,8 +30,8 @@ public class Main extends MeshViewer {
 		Parameters.init(this);
 		
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
-		//this.signatures = new SignatureMap(this.sample);
 		this.signatures = new SignatureMap(this.sample);
+		this.reflections = new ReflectionSpace(signatures);
 				
 		// test reflection
 		List<Signature> list=this.signatures.getSignatures();

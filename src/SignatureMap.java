@@ -26,7 +26,6 @@ public class SignatureMap {
 		System.out.println("ok");
 		System.out.println("After pruning : "+this.p.size()+" signatures.");
 		
-		System.out.print("Pairing...");
 		Iterator<Signature> it = p.iterator();
 		while(it.hasNext()){
 			s=it.next();
@@ -36,7 +35,7 @@ public class SignatureMap {
 			}
 		}
 		System.out.println("ok");
-		System.out.println("A subset of "+this.p.size()+" signatures has been used.");
+		System.out.println("A subset of "+this.p.size()+" signatures has been extracted.");
 	}
 	
 	// return a list of all the signatures, for display purposes only
