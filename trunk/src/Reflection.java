@@ -55,10 +55,12 @@ public class Reflection {
 		r[5] = n.z;
 		v1 = s1.getVertex();
 		v2 = s2.getVertex();
-		this.valid = n.crossProduct(s1.getNormale()).sum(n.crossProduct(s2.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
+		Vector_3 n2i = 
+			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
+		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 	}
-
-	public Reflection(double[] ds) {
+	
+    public Reflection(double[] ds) {
 		this.r=ds.clone();
 	}
 	// display the reflection plane
