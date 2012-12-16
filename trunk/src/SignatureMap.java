@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,25 +12,45 @@ import Jcg.polyhedron.Vertex;
  *
  */
 public class SignatureMap {
-	List<Signature> m = new LinkedList<Signature>();
+	List<Signature> p = new LinkedList<Signature>();
+	KDTree2<Signature> q = new KDTree2<Signature>(2);
 	
-	public SignatureMap(Sampling s){
+	public SignatureMap(Sampling sample){
 		System.out.print("Computing signatures...");
-		for(Vertex v:s.vertices){
-			Signature sign = new Signature(v);
-			//System.out.println("signature computed !");
-			if(sign.isValid())
-				m.add(new Signature(v));
+		Signature s;
+		for(Vertex v:sample.vertices){
+			s = new Signature(v);
+			if(s.isValid())
+				p.add(new Signature(v));
 		}
 		System.out.println("ok");
-		System.out.println("After pruning : "+this.m.size()+" signatures.");
+		System.out.println("After pruning : "+this.p.size()+" signatures.");
+		
+		System.out.print("Pairing...");
+		Iterator<Signature> it = p.iterator();
+		while(it.hasNext()){
+			s=it.next();
+			if(Math.random()>=Parameters.pairingRatio){
+				q.add(new double[]{s.getPrincipalCurvature1(),s.getPrincipalCurvature2()}, s);
+				it.remove();
+			}
+		}
+		System.out.println("ok");
+		System.out.println("A subset of "+this.p.size()+" signatures has been used.");
+	}
+	
+	// return a list of all the signatures, for display purposes only
+	public List<Signature> getSignatures(){
+		List<Signature> res = q.getRange(new double[]{Double.MIN_VALUE,Double.MIN_VALUE}, new double[]{Double.MAX_VALUE,Double.MAX_VALUE});
+		res.addAll(p);
+		return res;
 	}
 	
 	// display the vertices that remains in the sample AFTER the pruning
 	public void displayPoints(MeshViewer MV){
 		MV.noStroke();
 		MV.fill(250f, 250f, 0f);
-		for(Signature s : this.m){
+		for(Signature s : this.getSignatures()){
 			MV.mesh.drawVertex(s.getVertex().getPoint());
 		}
 	}
@@ -39,7 +60,7 @@ public class SignatureMap {
 		Point_3 p;
 		Vector_3 n;
 		MV.strokeWeight(1);		
-		for(Signature s : this.m){
+		for(Signature s : this.getSignatures()){
 			p=s.getVertex().getPoint();
 			n=s.getNormale();
 			Vector_3 d1 = s.getPrincipalDirection1().multiplyByScalar(s.getPrincipalCurvature1()/100);
@@ -60,7 +81,7 @@ public class SignatureMap {
 		Vector_3 n;
 		MV.strokeWeight(1);	
 		double scale=.7;
-		for(Signature s : this.m){
+		for(Signature s : this.getSignatures()){
 			p=s.getVertex().getPoint();
 			n=s.getNormale().normalized();
 			Vector_3 d1 = s.getPrincipalDirection1().normalized();
@@ -89,14 +110,14 @@ public class SignatureMap {
 		double min2=Double.MAX_VALUE;
 		double max1=0;
 		double max2=0;
-		for(Signature s : this.m){
+		for(Signature s : this.getSignatures()){
 			min1=Math.min(min1, s.getPrincipalCurvature1());
 			min2=Math.min(min2, s.getPrincipalCurvature2());
 			max1=Math.max(max1, s.getPrincipalCurvature1());
 			max2=Math.max(max2, s.getPrincipalCurvature2());
 		}
 		
-		for(Signature s : this.m){
+		for(Signature s : this.getSignatures()){
 			p=s.getVertex().getPoint();
 			n=s.getNormale().normalized();
 			Vector_3 d1 = s.getPrincipalDirection1().normalized();
@@ -120,7 +141,7 @@ public class SignatureMap {
 		float scale = (float) MV.mesh.scaleFactor;
 		MV.noStroke();
 		MV.fill(250.f,250.f,250.f);
-		for(Signature s: this.m){
+		for(Signature s: this.getSignatures()){
 			p=s.getVertex().getPoint();
 			MV.translate(scale*p.x.floatValue(), scale*p.y.floatValue(), scale*p.z.floatValue());
 			MV.sphere(scale * ((float) Parameters.radius));
