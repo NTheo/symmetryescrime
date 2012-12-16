@@ -15,6 +15,7 @@ public class Main extends MeshViewer {
 	//static String filename="src/OFF/tri_round_cube.off";
 	static String filename="src/OFF/tri_triceratops.off";
 	//static String filename="src/OFF/bunny.off";
+	//static String filename="src/OFF/OFF/OFF_various/cow.off";
 	Sampling sample;
 	SignatureMap signatures;
 	ReflectionSpace reflections;
