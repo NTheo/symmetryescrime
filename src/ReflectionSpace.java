@@ -15,11 +15,13 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 			System.out.print(neighbors.size()+" ");
 			for(Signature t: neighbors){
 				r=new Reflection(s, t);
-				this.add(r.r, r);
+				if(r.valid)
+					this.add(r.r, r);
 			}
 		}
 		System.out.println("ok");
 	}
+	
 	public static void display(SignatureMap SM, MeshViewer mv){
 		List<Signature> neighbors;
 		for(Signature s: SM.p){
