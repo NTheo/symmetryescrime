@@ -13,7 +13,6 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 					s.getPrincipalCurvature2()-Parameters.pairingRange/2},
 					new double[]{s.getPrincipalCurvature1()+Parameters.pairingRange/2,
 					s.getPrincipalCurvature2()+Parameters.pairingRange/2});
-			System.out.print("neighbor.size() : "+neighbors.size()+" -> ");
 			valids=0;
 			for(Signature t: neighbors){
 				r=new Reflection(s, t);
@@ -22,7 +21,7 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 					valids++;
 				}
 			}
-			System.out.println(valids);
+			//System.out.println("neighbor : "+neighbors.size()+" -> "+valids);
 		}
 	}
 	
