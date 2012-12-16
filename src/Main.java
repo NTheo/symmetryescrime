@@ -76,24 +76,30 @@ public class Main extends MeshViewer {
 				
 		//test.display(this);
 		//this.test2.display(this);
-		for(int i=0; i<this.clusters.clusters.size(); i++){
-			this.clusters.clusters.get(i).r.display(this);
-		}
+//		for(int i=0; i<this.clusters.clusters.size(); i++){
+//			this.clusters.clusters.get(i).r.display(this);
+//		}
 		//this.clusters.clusters.get(0).r.display(this);
 
-		for(Reflection r:this.reflections.getRange(
+//		for(Reflection r:this.reflections.getRange(
+//				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
+//				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}
+//				)){
+//			if(r.valid){
+//				r.display3(this);
+//			}
+//		}
+	
+		List<Reflection> lr = this.reflections.getRange(
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
-				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}
-				)){
-			if(r.valid){
-				r.display3(this);
-			}
-		}
+				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE});
+		//Reflection r=lr.get((int) (Math.random()*lr.size()));
+		Reflection r = lr.get(0);
+		if(r.valid) r.display4(this);
 	}
 	
 	
 	public static void main(String[] args) {
-		//while(true){System.out.println("ôigbiypgiyv");}
 		PApplet.main(new String[] { "Main",filename});		
 	}
 
