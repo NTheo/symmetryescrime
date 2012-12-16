@@ -53,7 +53,7 @@ public class Reflection {
 		r[3] = n.x;
 		r[4] = n.y;
 		r[5] = n.z;
-		//cluster = -1;
+		this.valid = n.crossProduct(s1.getNormale()).sum(n.crossProduct(s2.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 	}
 
 	// display the reflection plane
