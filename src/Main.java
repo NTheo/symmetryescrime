@@ -19,6 +19,7 @@ public class Main extends MeshViewer {
 	Sampling sample;
 	SignatureMap signatures;
 	ReflectionSpace reflections;
+	MeanShiftClustering clusters;
 	Reflection test2;
 	Signature s1,s2;
 	
@@ -32,6 +33,7 @@ public class Main extends MeshViewer {
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 		this.signatures = new SignatureMap(this.sample);
 		this.reflections = new ReflectionSpace(signatures);
+		this.clusters = new MeanShiftClustering(reflections);
 				
 		// test reflection
 		List<Signature> list=this.signatures.getSignatures();
@@ -71,7 +73,10 @@ public class Main extends MeshViewer {
 		this.mesh.drawVertex(p1);
 		this.mesh.drawVertex(p2);
 
-		this.test2.display(this);
+		//this.test2.display2(this);
+		for(int i=0; i<this.clusters.clusters.size(); i++){
+			this.clusters.clusters.get(i).r.display2(this);
+		}
 	}
 	
 	

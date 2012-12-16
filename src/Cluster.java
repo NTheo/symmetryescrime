@@ -6,9 +6,9 @@ import Jcg.polyhedron.Vertex;
 
 
 public class Cluster {
-	Reflection r;
-	int weight;
-	List<pair>  l;
+	public Reflection r;
+	public int weight;
+	public List<pair>  l;
 	Cluster(Reflection r, int i, ArrayList<Reflection> ref){
 		this.r=r;
 		weight=i;
