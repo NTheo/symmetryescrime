@@ -34,7 +34,6 @@ public class SignatureMap {
 				it.remove();
 			}
 		}
-		System.out.println("ok");
 		System.out.println("A subset of "+this.p.size()+" signatures has been extracted.");
 	}
 	
