@@ -59,6 +59,19 @@ public class Main extends MeshViewer {
 		Vector_3 p = n.multiplyByScalar(2);
 		Reflection test = new Reflection(new double[]{p.x,p.y,p.z,n.x,n.y,n.z});
 
+		//Point_3 p1=s1.getVertex().getPoint();
+		//Point_3 p2=s2.getVertex().getPoint();
+		
+		//this.stroke(0,0,250);
+		//Vector_3 direction = ((Vector_3) p2.minus(p1)).normalized();
+		//direction = direction.multiplyByScalar(this.mesh.scaleFactor/6);
+		//this.mesh.drawSegment(p1.plus(direction.opposite()), p2.plus(direction));
+		
+		//this.noStroke();
+		//this.fill(50, 200, 50);		
+		//this.mesh.drawVertex(p1);
+		//this.mesh.drawVertex(p2);
+
 //		Point_3 p1=s1.getVertex().getPoint();
 //		Point_3 p2=s2.getVertex().getPoint();
 //		
@@ -72,6 +85,7 @@ public class Main extends MeshViewer {
 //		this.mesh.drawVertex(p1);
 //		this.mesh.drawVertex(p2);
 
+
 		this.signatures.displayNeighborsNumber(this);
 				
 		//test.display(this);
@@ -80,6 +94,14 @@ public class Main extends MeshViewer {
 //			this.clusters.clusters.get(i).r.display2(this);
 //		}
 		this.clusters.clusters.get(0).r.display2(this);
+		for(Reflection r:this.reflections.getRange(
+				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
+				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}
+				)){
+			if(r.valid){
+				r.display3(this);
+			}
+		}
 	}
 	
 	
