@@ -146,7 +146,7 @@ public class MeanShiftClustering {
     		}
     	}
     	int iinit = 0;
-    	do{iinit = mergeCluster(iinit);}while(-1!=iinit);
+    	//do{iinit = mergeCluster(iinit);}while(-1!=iinit);
     	
     }
 
