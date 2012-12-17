@@ -29,7 +29,7 @@ public abstract class Sampling {
 		
 		// We set the radius -> will be useful for computing 
 		float distance=(Parameters.minDistance+Parameters.maxDistance)/2;
-		Parameters.radius= (float) Math.sqrt(4*distance*distance/this.size);
+		Parameters.radius= (float) Math.sqrt(36*distance*distance/this.size);
 		System.out.println("radius = "+Parameters.radius);
 		
 		System.out.print("Extracting sample...");

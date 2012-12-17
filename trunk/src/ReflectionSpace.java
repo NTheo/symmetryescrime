@@ -24,5 +24,25 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 			//System.out.println("neighbor : "+neighbors.size()+" -> "+valids);
 		}
 	}
+	public ReflectionSpace(RefSignatureMap SM){
+		super(6);
+		System.out.println("Pairing...");
+		List<RefSignature> neighbors;
+		Reflection r;
+		int valids;
+		for(RefSignature s: SM.p){
+			neighbors = SM.q.getRange(new double[]{s.getAngleSum()-Parameters.pairingRange/400},
+					new double[]{s.getAngleSum()+Parameters.pairingRange/400});
+			valids=0;
+			for(RefSignature t: neighbors){
+				r=new Reflection(s, t);
+				if(r.valid){
+					this.add(r.r, r);
+					valids++;
+				}
+			}
+			System.out.println("neighbor : "+neighbors.size()+" -> "+valids);
+		}
+	}
 	
 }

@@ -5,7 +5,7 @@ import Jama.Matrix;
 public class Vector_3 extends Vector_2 {
   public Double z;
 
-  public Vector_3() {}
+  public Vector_3() {this.x = 0.; this.y = 0.; this.z=0.;}
   
   public Vector_3(Number x,Number y,Number z) { 
   	this.x=x.doubleValue(); 
