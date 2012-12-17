@@ -2,7 +2,7 @@ package Jcg.geometry;
 
 public class Point_3 implements Point_ {
   public Double x,y,z;
-
+  static public final Point_3 zero = new Point_3();
   public Point_3() {}
   
   public Point_3(Number x,Number y,Number z) { 
