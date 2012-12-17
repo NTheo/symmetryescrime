@@ -14,7 +14,6 @@ public class MeanShiftClustering {
 	double sqAvgRad;  // averaging radius (defining the window)
 	double sqInflRad;  // influence radius
 	double sqMergeRad;  // merging radius
-	private double cvgRad;
 	private double inflRad;
 	public ArrayList<Cluster> clusters;
 	//RangeSearch Rs;  // data structure for nearest neighbor search
@@ -31,26 +30,17 @@ public class MeanShiftClustering {
 		System.out.println("Clustering...");
 		N = n;
 		initMSC(n, Parameters.clusterRadius, 0., Parameters.clusterRadius*2/3., Parameters.clusterRadius*3.);
-		double[] low = new double[n.dimensions];
-		double[] high = new double[n.dimensions];
-		for(int i = 0; i<n.dimensions; i++){
-			low[i] = Double.MIN_VALUE;
-			high[i] = Double.MAX_VALUE;
-		}
 		int clusterIndex = 0;
 		clusters = new ArrayList<Cluster>();
-		int reflectionCount=0;
-		for(Reflection r:N.getRange(low, high)){
+		for(Reflection r:N.all()){
 			//System.out.println("cluster "+(1+clusterIndex++) +"/"+ N.getRange(low, high).size());
 			if(r.cluster<0){
 				clusters.add(detectCluster(r, clusterIndex));
 			}
-			reflectionCount++;
 		}
-		System.out.println(reflectionCount+" reflections in ReflectionSPace.");
 		System.out.println(clusters.size()+" clusters detected before merging");
 		int iinit = 0;
-		do{iinit = mergeCluster(iinit);}while(-1!=iinit);
+		//do{iinit = mergeCluster(iinit);}while(-1!=iinit);
 		System.out.println(clusters.size()+" clusters extracted");
 	}
 
