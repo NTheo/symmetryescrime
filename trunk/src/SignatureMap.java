@@ -54,30 +54,30 @@ public class SignatureMap {
 	}
 	
 	// display the normal and principal directions for each point 
-	public void displayNormals(MeshViewer MV){
+	public void displayNormals(MeshViewer mv){
 		Point_3 p;
 		Vector_3 n;
-		MV.strokeWeight(1);		
+		mv.strokeWeight(1);		
 		for(Signature s : this.getSignatures()){
 			p=s.getVertex().getPoint();
 			n=s.getNormale();
 			Vector_3 d1 = s.getPrincipalDirection1().multiplyByScalar(s.getPrincipalCurvature1()/100);
 			Vector_3 d2 = s.getPrincipalDirection2().multiplyByScalar(s.getPrincipalCurvature2()/100);
 			
-			MV.stroke(250.0f,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(n));
-			MV.stroke(250.0f,250.0f,0);
-			MV.mesh.drawSegment(p, p.plus(d1));
-			MV.stroke(0,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(d2));
+			mv.stroke(250.0f,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(n));
+			mv.stroke(250.0f,250.0f,0);
+			mv.mesh.drawSegment(p, p.plus(d1));
+			mv.stroke(0,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(d2));
 		}
 	}
 	
 	// display the normalized normal and principal directions for each point
-	public void displayNormalized(MeshViewer MV){
+	public void displayNormalized(MeshViewer mv){
 		Point_3 p;
 		Vector_3 n;
-		MV.strokeWeight(1);	
+		mv.strokeWeight(1);	
 		double scale=.7;
 		for(Signature s : this.getSignatures()){
 			p=s.getVertex().getPoint();
@@ -89,20 +89,20 @@ public class SignatureMap {
 			d1=d1.multiplyByScalar(scale);
 			d2=d2.multiplyByScalar(scale);
 			
-			MV.stroke(250.0f,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(n));
-			MV.stroke(250.0f,250.0f,0);
-			MV.mesh.drawSegment(p, p.plus(d1));
-			MV.stroke(0,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(d2));
+			mv.stroke(250.0f,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(n));
+			mv.stroke(250.0f,250.0f,0);
+			mv.mesh.drawSegment(p, p.plus(d1));
+			mv.stroke(0,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(d2));
 		}
 	}
 	
 	// display the normalized normal and pseudo-normalized principal directions (on a 0.5 to 1 scale)
-	public void displayCustom(MeshViewer MV){
+	public void displayCustom(MeshViewer mv){
 		Point_3 p;
 		Vector_3 n;
-		MV.strokeWeight(1);	
+		mv.strokeWeight(1);	
 		
 		double min1=Double.MAX_VALUE;
 		double min2=Double.MAX_VALUE;
@@ -125,31 +125,30 @@ public class SignatureMap {
 			d1=d1.multiplyByScalar((s.getPrincipalCurvature1()-min1)/(max1-min1)+.2).multiplyByScalar(Parameters.radius);
 			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(Parameters.radius);
 			
-			MV.stroke(250.0f,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(n));
-			MV.stroke(250.0f,250.0f,0);
-			MV.mesh.drawSegment(p, p.plus(d1));
-			MV.stroke(0,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(d2));
+			mv.stroke(250.0f,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(n));
+			mv.stroke(250.0f,250.0f,0);
+			mv.mesh.drawSegment(p, p.plus(d1));
+			mv.stroke(0,250.0f,250.0f);
+			mv.mesh.drawSegment(p, p.plus(d2));
 			
 		}
 	}
 	
 	// display sphere with Parameters.radius as a parameter
-	public void displaySpheres(MeshViewer MV){
+	public void displaySpheres(MeshViewer mv){
 		Point_3 p;
-		float scale = (float) MV.mesh.scaleFactor;
-		MV.noStroke();
-		MV.fill(250.f,250.f,250.f);
+		float scale = (float) mv.mesh.scaleFactor;
+		mv.noStroke();
+		mv.fill(250.f,250.f,250.f);
 		for(Signature s: this.getSignatures()){
 			p=s.getVertex().getPoint();
-			MV.translate(scale*p.x.floatValue(), scale*p.y.floatValue(), scale*p.z.floatValue());
-			MV.sphere(scale * ((float) Parameters.radius));
-			MV.translate(-scale*p.x.floatValue(), -scale*p.y.floatValue(), -scale*p.z.floatValue());
+			mv.translate(scale*p.x.floatValue(), scale*p.y.floatValue(), scale*p.z.floatValue());
+			mv.sphere(scale * ((float) Parameters.radius));
+			mv.translate(-scale*p.x.floatValue(), -scale*p.y.floatValue(), -scale*p.z.floatValue());
 		}
 	}
-	
-	
+		
 	// For each signature in p, draw a sphere. The darker the color, the less neighbors this signature has in the signature space
 	public void displayNeighborsNumber(MeshViewer mv){
 		List<Signature> neighbors;
@@ -164,6 +163,20 @@ public class SignatureMap {
 		}
 	}
 	
-	
+	public void displayCorrespondingPointsInSignatureSpace(MeshViewer mv){
+		Signature s = this.p.get(Main.viewIndexForSignatures%p.size());
+		List<Signature> neighbors = this.q.getRange(new double[]{s.getPrincipalCurvature1()-Parameters.pairingRange/2,
+				s.getPrincipalCurvature2()-Parameters.pairingRange/2},
+				new double[]{s.getPrincipalCurvature1()+Parameters.pairingRange/2,
+				s.getPrincipalCurvature2()+Parameters.pairingRange/2});
+		
+		mv.noStroke();
+		mv.fill(255,0,0);
+		mv.mesh.drawVertex(s.getVertex().getPoint());
+		
+		mv.fill(255,255,0);
+		for(Signature t : neighbors)
+			mv.mesh.drawVertex(t.getVertex().getPoint());
+	}
 	
 }

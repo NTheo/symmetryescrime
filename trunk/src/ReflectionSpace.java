@@ -24,6 +24,7 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 			//System.out.println("neighbor : "+neighbors.size()+" -> "+valids);
 		}
 	}
+	
 	public ReflectionSpace(RefSignatureMap SM){
 		super(6);
 		System.out.println("Pairing...");
