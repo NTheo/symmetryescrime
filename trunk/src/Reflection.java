@@ -224,7 +224,7 @@ public class Reflection {
 		mv.mesh.drawSegment(p1, p1.plus(n1));
 		mv.mesh.drawSegment(p2, p2.plus(n2));
 		
-		System.out.println("Reflection has a validity value of : "+this.validityValue);
+		//System.out.println("Reflection has a validity value of : "+this.validityValue);
 		
 		this.display(mv);
 	}

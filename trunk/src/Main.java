@@ -13,8 +13,8 @@ import processing.core.PApplet;
 public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
-	static String filename="src/OFF/tri_round_cube.off";
-	//static String filename="src/OFF/tri_triceratops.off";
+	//static String filename="src/OFF/tri_round_cube.off";
+	static String filename="src/OFF/tri_triceratops.off";
 	//static String filename="src/OFF/bunny.off";
 	//static String filename="src/OFF/OFF/OFF_various/cow.off";
 	Sampling sample;
@@ -22,6 +22,8 @@ public class Main extends MeshViewer {
 	//RefSignatureMap signatures;
 	ReflectionSpace reflections;
 	MeanShiftClustering clusters;
+	int viewIndexForReflections=0;
+	int viewIndexForSignatures=0;
 	
 	// test reflection
 	Reflection test2;
@@ -35,7 +37,7 @@ public class Main extends MeshViewer {
 		
 		Parameters.init(this);
 		
-		System.out.println("scale = "+this.mesh.scaleFactor);
+		System.out.println("The scaleFactor is "+this.mesh.scaleFactor);
 		
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 		this.signatures = new SignatureMap(this.sample);
@@ -60,9 +62,9 @@ public class Main extends MeshViewer {
 
 //		this.signatures.displayNeighborsNumber(this);	
 
-		this.displayAllReflectionPlanes();
+//		this.displayAllReflectionPlanes();
 //		this.displayAllReflectionPoints();
-//		this.displayOneReflectionPairOfPointsAndNormals();
+		this.displayOneReflectionPairOfPointsAndNormals();
 	}
 	
 	public void displayAllReflectionPlanes(){
@@ -88,9 +90,17 @@ public class Main extends MeshViewer {
 		List<Reflection> lr = this.reflections.getRange(
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
 				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE});
-		//Reflection r=lr.get((int) (Math.random()*lr.size()));
-		Reflection r = lr.get(0);
-		if(r.valid) r.display4(this);
+		if(lr.size()>0){
+			Reflection r = lr.get(this.viewIndexForReflections%lr.size());
+			if(r.valid){ 
+				r.display4(this);
+				System.out.println("validity value = "+r.validityValue);
+			}
+			else
+				System.out.println("This reflection is not valid.");
+		}else{
+			System.out.println("There are no reflections in ReflectionSpace !");
+		}
 	}
 	
 	// Test the display of a plane corresponding to an arbitrary reflection
@@ -126,7 +136,20 @@ public class Main extends MeshViewer {
 		
 		this.test2.display(this);
 	}
-	
+
+	public void keyPressed(){
+		switch(key){
+		case('r'):
+			this.viewIndexForReflections++;
+			break;
+		case('s'):
+			this.viewIndexForSignatures++;
+			break;	
+		default:
+			System.out.println("Please presse R to display a new reflection, and S to display a new Signature.");
+		}
+	}
+
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "Main",filename});		
 	}
