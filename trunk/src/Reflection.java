@@ -125,8 +125,8 @@ public class Reflection {
 		//MV.line(0, 0, 0, (float) (normal.x*scale*10),(float) (normal.y*scale*10),(float) (normal.z*scale*10));
 				
 		MV.rectMode(2);
-		MV.fill(128+this.hashCode()*127,128+this.hashCode()%127,128+(2*this.hashCode())%127,100);
-		MV.stroke(128+this.hashCode()*127,128+this.hashCode()%127,128+(2*this.hashCode())%127);
+		MV.fill(128+this.hashCode()%127,128+this.hashCode()%127,128+(2*this.hashCode())%127,100);
+		MV.stroke(128+this.hashCode()%127,128+this.hashCode()%127,128+(2*this.hashCode())%127);
 		float alpha, beta, gamma;
 		if(Math.abs(normal.z) != 1.f){
 			// alpha = acos(-z2/sqrt(1-z3²)
