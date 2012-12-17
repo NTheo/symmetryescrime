@@ -27,9 +27,9 @@ public abstract class Sampling {
 		int psv=polyhedron.sizeOfVertices();
 		this.size=(int) (psv*Parameters.samplingRatio);
 		
-		// We set the radius -> will be useful for computing 
+		// We set the radius -> will be useful for computing the curvatures
 		float distance=(Parameters.minDistance+Parameters.maxDistance)/2;
-		Parameters.radius= (float) Math.sqrt(36*distance*distance/this.size);
+		Parameters.radius= (float) (2*distance/Math.sqrt(this.size));
 		System.out.println("radius = "+Parameters.radius);
 		
 		System.out.print("Extracting sample...");

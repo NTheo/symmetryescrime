@@ -19,7 +19,7 @@ public class Parameters {
 	static float radius;
 	static float minDistance;
 	static float maxDistance;
-	static double pairingRange=1000000;		// 0.5
+	static double pairingRange;		// 0.5
 	
 	public static void setMinDistance(MeshViewer MV){
 		double min=Double.MAX_VALUE;
@@ -48,7 +48,7 @@ public class Parameters {
 	public static void init(MeshViewer MV){
 		setMinDistance(MV);
 		setMaxDistance(MV);
-		//pairingRange=MV.mesh.scaleFactor*MV.mesh.scaleFactor*MV.mesh.scaleFactor*0.000002048;
+		pairingRange=MV.mesh.scaleFactor*5;
 	}
 
 }

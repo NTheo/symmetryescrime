@@ -38,7 +38,6 @@ public class FarthestPointSampling extends Sampling {
 		}
 		
 		// max is the distance between the 2 closest points
-		System.out.println("max = "+max);
 		Parameters.radius=max.floatValue();
 		
 		System.out.println("ok");
