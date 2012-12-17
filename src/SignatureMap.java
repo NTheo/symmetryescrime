@@ -164,7 +164,7 @@ public class SignatureMap {
 	}
 	
 	public void displayCorrespondingPointsInSignatureSpace(MeshViewer mv){
-		Signature s = this.p.get(Main.viewIndexForSignatures%p.size());
+		Signature s = this.p.get(Main.viewIndex%p.size());
 		List<Signature> neighbors = this.q.getRange(new double[]{s.getPrincipalCurvature1()-Parameters.pairingRange/2,
 				s.getPrincipalCurvature2()-Parameters.pairingRange/2},
 				new double[]{s.getPrincipalCurvature1()+Parameters.pairingRange/2,

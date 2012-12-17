@@ -9,13 +9,13 @@ import Jcg.polyhedron.Vertex;
  */
 public class Parameters {
 
-	static final double samplingRatio=.2;
+	static final double samplingRatio=.9;
 	static final double pruningThreshold=0.75;
 	static final double pairingRatio=0.2;
-	static final double pairingRange=1;
+	static final double pairingRange=.5;
 	static final double clusterRadius = 1.;
 	static final double bandwidth = 2; // 0.5 -> 4.0
-	static final double reflectionThreshold=0.5;
+	static final double reflectionThreshold=.1;
 	
 	static float radius;
 	static float minDistance;

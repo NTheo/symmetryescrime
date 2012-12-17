@@ -39,12 +39,15 @@ public class MeanShiftClustering {
 		}
 		int clusterIndex = 0;
 		clusters = new ArrayList<Cluster>();
+		int reflectionCount=0;
 		for(Reflection r:N.getRange(low, high)){
 			//System.out.println("cluster "+(1+clusterIndex++) +"/"+ N.getRange(low, high).size());
 			if(r.cluster<0){
 				clusters.add(detectCluster(r, clusterIndex));
 			}
+			reflectionCount++;
 		}
+		System.out.println(reflectionCount+" reflections in ReflectionSPace.");
 		System.out.println(clusters.size()+" clusters detected before merging");
 		int iinit = 0;
 		do{iinit = mergeCluster(iinit);}while(-1!=iinit);
@@ -151,89 +154,27 @@ public class MeanShiftClustering {
 	}
 
 
-
-
-	//-------------------------------    
-	//------ Test (exercice 2)-------
-	//-------------------------------
-
-
-	/*    
-    public static void main(String[ ] args) throws Exception {
-    	System.out.println("Exercice 2:");
-    	double bandWidth;
-    	PointCloud N=null;
-    	if (args.length < 1) {
-    		System.out.println("Usage: java MeanShiftClustering (datafile.dat) bandwidth");
-    		System.out.println("dataFile.dat optionnel");
-    		System.exit(0);
-    	}    	
-    	if (args.length == 1 ) {
-    		N=PointCloud.randomPoints(3000, 3);
-    		//N=PointCloud.randomPointsOnCircle(3000, 3);
-    		bandWidth = Double.parseDouble(args[0]);
-    	}
-    	else { 
-    		N=Clustering.readFile(args[0]);
-    		bandWidth = Double.parseDouble(args[1]);
-    	}
-
-    	System.out.println("point cloud of size: "+PointCloud.size(N));
-    	Draw.draw2D(N, "original point cloud");
-
-    	Calendar rightNow = Calendar.getInstance(); // to compute time performances
-    	long time0 = rightNow.getTimeInMillis();
-
-//--------- choose test to perform ---------------
-    	//testDetectCluster(N, bandWidth); // ex 2.1
-    	testMeanShift(N, bandWidth); // ex 2.3
-//------------------------------------------------
-
-    	rightNow = Calendar.getInstance(); // to compute time performances
-    	long time = rightNow.getTimeInMillis();
-    	System.out.println("Total time to find clusters: " + (time-time0)/1000 + "s " + (time-time0)%1000 + "ms");
-
-    }
-
-    public static void testMeanShift(PointCloud N, double bandwidth) {
-    	System.out.println("Exercice 2.3: testing Mean-Shift clustering");
-
-    	MeanShiftClustering msc = new MeanShiftClustering (N, bandwidth);
-
-    	Point_D[] clusterCenters = msc.detectClusters();
-    	int nDetectedClusters=0;
-    	for(int i=0;i<clusterCenters.length;i++)
-    		if(clusterCenters[i]!=null) 
-    			nDetectedClusters++;
-    	System.out.println("Number of clusters detected: "+nDetectedClusters);
-
-    	Draw.draw3D(N);
-    	msc.Rs.timePerformance();
-    }
-
-    public static void testDetectCluster(PointCloud N, double bandwidth) {
-    	System.out.println("Exercice 2.1: testing detecting a cluster");
-
-    	MeanShiftClustering msc = new MeanShiftClustering (N, bandwidth);
-
-    	int clusterNumber=0;
-    	PointCloud cluster=msc.detectCluster(N.next.p, clusterNumber);
-
-    	PointCloud t=cluster;
-    	int i=0;
-    	while(t!=null) {
-    		if(t.p.cluster==clusterNumber)
-    			i++;
-    		t=t.next;
-    	}
-    	System.out.println("size of the detected cluster: "+PointCloud.size(cluster));
-    	System.out.println("size of the cluster: "+i);
-
-    	Draw.draw3D(N);
-    	//Draw.draw3D(cluster);
-    	msc.Rs.timePerformance();
-    }
-	 */
+	// Display 
+	public void displayOneClusterAndPairsOfPoints(MeshViewer mv){
+		Cluster c = this.clusters.get(Main.viewIndex%this.clusters.size());
+		c.r.display(mv);  // plane
+		
+		for(pair p:c.l){
+			mv.noStroke();
+			mv.fill(128+c.r.hashCode()%127,128+c.r.hashCode()%127,128+(2*c.r.hashCode())%127);
+			mv.mesh.drawVertex(p.first.getPoint());
+			mv.mesh.drawVertex(p.second.getPoint());			
+			mv.stroke(128+c.r.hashCode()%127,128+c.r.hashCode()%127,128+(2*c.r.hashCode())%127);
+			mv.mesh.drawSegment(p.first.getPoint(), p.second.getPoint());
+		}
+		
+		mv.noStroke();
+		mv.fill(255,0,0);
+		mv.mesh.drawVertex(c.r.getV1().getPoint());
+		mv.mesh.drawVertex(c.r.getV2().getPoint());		
+		mv.stroke(255,0,0);
+		mv.mesh.drawSegment(c.r.getV1().getPoint(), c.r.getV2().getPoint());
+	}
 }
 
 
