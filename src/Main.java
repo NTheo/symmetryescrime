@@ -22,8 +22,8 @@ public class Main extends MeshViewer {
 	//RefSignatureMap signatures;
 	ReflectionSpace reflections;
 	MeanShiftClustering clusters;
-	int viewIndexForReflections=0;
-	int viewIndexForSignatures=0;
+	static int viewIndexForReflections=0;
+	static int viewIndexForSignatures=0;
 	
 	// test reflection
 	Reflection test2;
@@ -61,10 +61,11 @@ public class Main extends MeshViewer {
 		//this.signatures.displaySpheres(this);
 
 //		this.signatures.displayNeighborsNumber(this);	
+		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
 
 //		this.displayAllReflectionPlanes();
 //		this.displayAllReflectionPoints();
-		this.displayOneReflectionPairOfPointsAndNormals();
+//		this.displayOneReflectionPairOfPointsAndNormals();
 	}
 	
 	public void displayAllReflectionPlanes(){
@@ -91,7 +92,7 @@ public class Main extends MeshViewer {
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
 				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE});
 		if(lr.size()>0){
-			Reflection r = lr.get(this.viewIndexForReflections%lr.size());
+			Reflection r = lr.get(viewIndexForReflections%lr.size());
 			if(r.valid){ 
 				r.display4(this);
 				System.out.println("validity value = "+r.validityValue);
@@ -140,10 +141,10 @@ public class Main extends MeshViewer {
 	public void keyPressed(){
 		switch(key){
 		case('r'):
-			this.viewIndexForReflections++;
+			viewIndexForReflections++;
 			break;
 		case('s'):
-			this.viewIndexForSignatures++;
+			viewIndexForSignatures++;
 			break;	
 		default:
 			System.out.println("Please presse R to display a new reflection, and S to display a new Signature.");
