@@ -12,11 +12,9 @@ public class RefSignature {
 	public RefSignature(Vertex vRoot){
 		this.angleSum = 0.;
 		this.normale = new Vector_3(0., 0., 0.);
-		int facesVisited = 0;
 		Halfedge eRoot = vRoot.getHalfedge();
 		Halfedge e = vRoot.getHalfedge();
 		do{
-			facesVisited++;
 			angleSum+=e.angle();
 			normale = normale.sum(e.getFace().normale());
 			e = e.getNext().getOpposite();

@@ -13,15 +13,15 @@ import processing.core.PApplet;
 public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
-	static String filename="src/OFF/tri_round_cube.off";
-	//static String filename="src/OFF/tri_triceratops.off";
+	//static String filename="src/OFF/tri_round_cube.off";
+	static String filename="src/OFF/tri_triceratops.off";
 	//static String filename="src/OFF/bunny.off";
 	//static String filename="src/OFF/OFF/OFF_various/cow.off";
 	Sampling sample;
 	SignatureMap signatures;
 	//RefSignatureMap signatures;
 	ReflectionSpace reflections;
-	MeanShiftClustering clusters;
+	MeanShiftClustering clustering;
 	static int viewIndex=0;
 	
 	// test reflection
@@ -42,8 +42,7 @@ public class Main extends MeshViewer {
 		this.signatures = new SignatureMap(this.sample);
 		//this.signatures = new RefSignatureMap(this.sample);
 		this.reflections = new ReflectionSpace(signatures);
-		this.clusters = new MeanShiftClustering(reflections);
-				
+		this.clustering = new MeanShiftClustering(reflections);
 	}
 	
 	
@@ -65,32 +64,25 @@ public class Main extends MeshViewer {
 //		this.displayAllReflectionPairsOfPoints();
 //		this.displayOneReflectionPairOfPointsAndNormals();
 //		this.displayAllReflectionPlanes();
-		this.clusters.displayOneClusterAndPairsOfPoints(this);
+		this.clustering.displayOneCluster(this);
 	}
 	
 	public void displayAllReflectionPlanes(){
-		for(int i=0; i<this.clusters.clusters.size(); i++){
-			this.clusters.clusters.get(i).r.display(this);
+		for(Cluster c: this.clustering.clusters){
+			c.r.display(this);
 		}
 	}
 	
 	// Display the pairs of points that have been used to generate Reflections in ReflectionSPace
 	public void displayAllReflectionPairsOfPoints(){
-		for(Reflection r:this.reflections.getRange(
-				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
-				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}
-				)){
-			//if(r.valid){  // test a priori inutile
+		for(Reflection r:this.reflections.getAll()){
 				r.display3(this);
-			//}
 		}
 	}
 	
 	// Display the 2 points that have been used to compute a Reflection, and their normals
 	public void displayOneReflectionPairOfPointsAndNormals(){
-		List<Reflection> lr = this.reflections.getRange(
-				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
-				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE});
+		List<Reflection> lr = this.reflections.getAll();
 		if(lr.size()>0){
 			Reflection r = lr.get(viewIndex%lr.size());
 			if(r.valid){ 
@@ -139,7 +131,7 @@ public class Main extends MeshViewer {
 	}
 
 	public void keyPressed(){
-		this.viewIndex++;
+		viewIndex++;
 	}
 
 	public static void main(String[] args) {

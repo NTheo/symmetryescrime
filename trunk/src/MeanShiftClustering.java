@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 
 /**
@@ -15,8 +17,9 @@ public class MeanShiftClustering {
 	double sqInflRad;  // influence radius
 	double sqMergeRad;  // merging radius
 	private double inflRad;
+	private ArrayList<Cluster> tempClusters;
 	public ArrayList<Cluster> clusters;
-
+	
 	/**
 	 * Main algorithm for detecting all clusters
 	 * Clusters are detected iteratively (until all points are processed)
@@ -30,17 +33,20 @@ public class MeanShiftClustering {
 		N = n;
 		initMSC(n);
 		int clusterIndex = 0;
-		clusters = new ArrayList<Cluster>();
-		for(Reflection r:N.all()){
+		tempClusters = new ArrayList<Cluster>();
+		for(Reflection r:N.getAll()){
 			//System.out.println("cluster "+(1+clusterIndex++) +"/"+ N.getRange(low, high).size());
 			if(r.cluster<0){
-				clusters.add(detectCluster(r, clusterIndex));
+				tempClusters.add(detectCluster(r, clusterIndex));
 			}
 		}
-		System.out.println(clusters.size()+" clusters detected before merging");
+		System.out.println(tempClusters.size()+" clusters detected before merging.");
 		int iinit = 0;
 		do{iinit = mergeCluster(iinit);}while(-1!=iinit);
-		System.out.println(clusters.size()+" clusters extracted");
+		System.out.println(tempClusters.size()+" clusters remain after merging.");
+		pruneNonsignificantClusters();
+		System.out.println(tempClusters.size()+" clusters contain more than one pair of points.");
+		sortClusters();
 	}
 
 	void initMSC (KDTree2<Reflection> n){
@@ -111,15 +117,15 @@ public class MeanShiftClustering {
 	 */
 	public int mergeCluster(int iinit){
 		//System.out.println(clusters.size());
-		for(int i = iinit; i<clusters.size(); i++){
-			for(int j = i+1; j<clusters.size(); j++){
+		for(int i = iinit; i<tempClusters.size(); i++){
+			for(int j = i+1; j<tempClusters.size(); j++){
 				//System.out.println(i+" "+j);
-				if(KDTree2.pointDistSq(clusters.get(i).r.r, clusters.get(j).r.r) < sqMergeRad){
-					if (clusters.get(i).weight>clusters.get(j).weight)
-						clusters.get(j).r = clusters.get(i).r;
-					clusters.get(j).r.weight += clusters.get(i).weight;
-					clusters.get(j).l.addAll(clusters.get(i).l);
-					clusters.remove(i);
+				if(KDTree2.pointDistSq(tempClusters.get(i).r.r, tempClusters.get(j).r.r) < sqMergeRad){
+					if (tempClusters.get(i).l.size()>tempClusters.get(j).l.size())
+						tempClusters.get(j).r = tempClusters.get(i).r;
+					tempClusters.get(j).r.weight += tempClusters.get(i).weight;
+					tempClusters.get(j).l.addAll(tempClusters.get(i).l);
+					tempClusters.remove(i);
 					return i;
 				}
 			}
@@ -127,12 +133,37 @@ public class MeanShiftClustering {
 		return(-1);
 	}
 
+	private void pruneNonsignificantClusters(){
+		Iterator<Cluster> it = this.tempClusters.iterator();
+		while(it.hasNext()){
+			if(it.next().l.size()<=1)
+				it.remove();
+		}
+	}
+	
+	private void sortClusters(){
+		PriorityQueue<Cluster> q = new PriorityQueue<Cluster>();
+		for(Cluster c :this.tempClusters){
+			q.add(c);
+		}
+		// We put the sorted clusters inside an ArrayList
+		this.clusters=new ArrayList<Cluster>();
+		while(!q.isEmpty()){
+			this.clusters.add(q.remove());
+		}
+		this.tempClusters=null;
+	}
 
-	// Display one cluster and the reflection plane
-	public void displayOneClusterAndPairsOfPoints(MeshViewer mv){
+	// Display one cluster and the corresponding reflection plane
+	public void displayOneCluster(MeshViewer mv){
+		if(this.clusters.size()<1){
+			System.out.println("There is no cluster to be displayed !");
+			return;
+		}
 		Cluster c = this.clusters.get(Main.viewIndex%this.clusters.size());
-		c.r.display(mv);  // plane
 		
+		c.r.display(mv);  // plane
+
 		for(pair p:c.l){
 			mv.noStroke();
 			mv.fill(128+c.r.hashCode()%127,128+c.r.hashCode()%127,128+(2*c.r.hashCode())%127);
