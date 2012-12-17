@@ -53,6 +53,15 @@ public class KDTree2<T> {
 	public void add(double[] key, T val) {
 		root.addPoint(key, val);
 	}
+	public List<T> all(){
+		double[] low = new double[this.dimensions];
+		double[] high = new double[this.dimensions];
+		for(int i = 0; i<this.dimensions; i++){
+			low[i] = -Double.MAX_VALUE;
+			high[i] = Double.MAX_VALUE;
+		}
+		return this.getRange(low, high);
+	}
 
 	/**
 	 * Returns all PointKD within a certain range defined by an upper and lower
