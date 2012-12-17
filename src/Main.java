@@ -14,8 +14,8 @@ public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
 	//static String filename="src/OFF/tri_round_cube.off";
-	//static String filename="src/OFF/tri_triceratops.off";
-	static String filename="src/OFF/bunny.off";
+	static String filename="src/OFF/tri_triceratops.off";
+	//static String filename="src/OFF/bunny.off";
 	//static String filename="src/OFF/OFF/OFF_various/cow.off";
 	Sampling sample;
 	SignatureMap signatures;
@@ -52,6 +52,7 @@ public class Main extends MeshViewer {
 
 		//this.mesh.drawAxis();
 		this.mesh.draw();
+
 		//this.sample.displaySpheres(this);
 		//this.signatures.displayPoints(this);
 		//this.signatures.displayNormalized(this);
@@ -59,12 +60,12 @@ public class Main extends MeshViewer {
 //		this.signatures.displaySpheres(this);
 
 //		this.signatures.displayNeighborsNumber(this);	
-//		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
+		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
 
 //		this.displayAllReflectionPairsOfPoints();
 //		this.displayOneReflectionPairOfPointsAndNormals();
 
-		this.clustering.displayOneCluster(this);
+//		this.clustering.displayOneCluster(this);
 //		this.displayAllReflectionPlanes();
 	}
 	
