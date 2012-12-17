@@ -9,7 +9,7 @@ import Jcg.polyhedron.Vertex;
  */
 public class Parameters {
 
-	static final double samplingRatio=0.5;
+	static final double samplingRatio=0.9;
 	static final double pruningThreshold=0.75;
 	static final double pairingRatio=0.2;
 	static final double pairingRange=1;
