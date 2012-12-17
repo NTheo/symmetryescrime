@@ -53,7 +53,7 @@ public class KDTree2<T> {
 	public void add(double[] key, T val) {
 		root.addPoint(key, val);
 	}
-	public List<T> all(){
+	public List<T> getAll(){
 		double[] low = new double[this.dimensions];
 		double[] high = new double[this.dimensions];
 		for(int i = 0; i<this.dimensions; i++){

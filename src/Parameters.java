@@ -14,7 +14,7 @@ public class Parameters {
 	static final double pairingRatio=0.2;
 	static final double pairingRange=.5;
 	static final double bandwidth = 1; // 0.5 -> 4.0
-	static final double mergingCoeff = .8;
+	static final double mergingCoeff = .05;
 	static final double reflectionThreshold=.1;
 	
 	static float radius;
