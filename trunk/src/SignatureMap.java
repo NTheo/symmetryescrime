@@ -126,12 +126,12 @@ public class SignatureMap {
 			d2=d2.multiplyByScalar((s.getPrincipalCurvature2()-min2)/(max2-min2)+.2).multiplyByScalar(Parameters.radius);
 			
 			MV.stroke(250.0f,250.0f,250.0f);
-			MV.mesh.drawSegment(p, p.plus(n.multiplyByScalar(3.)));
-			/*MV.stroke(250.0f,250.0f,0);
+			MV.mesh.drawSegment(p, p.plus(n));
+			MV.stroke(250.0f,250.0f,0);
 			MV.mesh.drawSegment(p, p.plus(d1));
 			MV.stroke(0,250.0f,250.0f);
 			MV.mesh.drawSegment(p, p.plus(d2));
-			*/
+			
 		}
 	}
 	
