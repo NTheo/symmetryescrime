@@ -10,8 +10,8 @@ import java.util.PriorityQueue;
  */
 public class MeanShiftClustering {
 
-	KDTree2<Reflection> N;
-	KDTree2<Reflection> seeds;
+	KDTree<Reflection> N;
+	KDTree<Reflection> seeds;
 	double sqCvgRad;  // convergence radius
 	double sqAvgRad;  // averaging radius (defining the window)
 	double sqInflRad;  // influence radius
@@ -28,7 +28,7 @@ public class MeanShiftClustering {
 	 *   - first i elements are cluster centers (non null points)
 	 *   - remaining n-i elements must be null
 	 */
-	MeanShiftClustering(KDTree2<Reflection> n){
+	MeanShiftClustering(KDTree<Reflection> n){
 		System.out.println("Clustering...");
 		N = n;
 		initMSC(n);
@@ -49,7 +49,7 @@ public class MeanShiftClustering {
 		sortClusters();
 	}
 
-	void initMSC (KDTree2<Reflection> n){
+	void initMSC (KDTree<Reflection> n){
 		N = n;
 		sqCvgRad = Parameters.bandwidth*0.001;
 		sqAvgRad = Parameters.bandwidth;
@@ -81,7 +81,7 @@ public class MeanShiftClustering {
 			List<Reflection> closeRef = N.getRange(low, high);
 			List<Reflection> l = new LinkedList<Reflection>();
 			for(Reflection re:closeRef){//removing all already-clustered or too far points
-				if(re.cluster<0 && KDTree2.pointDistSq(re.r, prev.r) < sqCvgRad)
+				if(re.cluster<0 && KDTree.pointDistSq(re.r, prev.r) < sqCvgRad)
 					l.add(re);
 			}
 			double[] mean = new double[d];
@@ -92,7 +92,7 @@ public class MeanShiftClustering {
 			next = N.getNearestNeighbors(mean, 1).removeMax();
 			pointsOfPath.add(next);
 			//System.out.println(KDTree2.pointDistSq(next.r, prev.r));
-		}while(KDTree2.pointDistSq(next.r, prev.r) > sqCvgRad);
+		}while(KDTree.pointDistSq(next.r, prev.r) > sqCvgRad);
 		//computing weight of cluster
 		ArrayList<Reflection> cluster = new ArrayList<Reflection>();
 		for(Reflection ref: pointsOfPath){
@@ -120,7 +120,7 @@ public class MeanShiftClustering {
 		for(int i = iinit; i<tempClusters.size(); i++){
 			for(int j = i+1; j<tempClusters.size(); j++){
 				//System.out.println(i+" "+j);
-				if(KDTree2.pointDistSq(tempClusters.get(i).r.r, tempClusters.get(j).r.r) < sqMergeRad){
+				if(KDTree.pointDistSq(tempClusters.get(i).r.r, tempClusters.get(j).r.r) < sqMergeRad){
 					if (tempClusters.get(i).l.size()>tempClusters.get(j).l.size())
 						tempClusters.get(j).r = tempClusters.get(i).r;
 					tempClusters.get(j).r.weight += tempClusters.get(i).weight;

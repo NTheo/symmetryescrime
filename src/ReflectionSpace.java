@@ -1,7 +1,7 @@
 import java.util.List;
 
 
-public class ReflectionSpace extends KDTree2<Reflection> {
+public class ReflectionSpace extends KDTree<Reflection> {
 	public ReflectionSpace(SignatureMap SM){
 		super(6);
 		System.out.println("Pairing...");

@@ -12,7 +12,6 @@ public class Parameters {
 	static final double samplingRatio=0.2;		// 0.2
 	static final double pruningThreshold=0.75;	// 0.75
 	static final double pairingRatio=0.2;		// 0.2
-	static final double pairingRange=0.5;		// 0.5
 	static final double bandwidth = 0.1;			// 0.1
 	static final double mergingCoeff = 1;		// 1
 	static final double reflectionThreshold=0.05;// 0.05	
@@ -20,7 +19,7 @@ public class Parameters {
 	static float radius;
 	static float minDistance;
 	static float maxDistance;
-
+	static double pairingRange=1000000;		// 0.5
 	
 	public static void setMinDistance(MeshViewer MV){
 		double min=Double.MAX_VALUE;
@@ -49,6 +48,7 @@ public class Parameters {
 	public static void init(MeshViewer MV){
 		setMinDistance(MV);
 		setMaxDistance(MV);
+		//pairingRange=MV.mesh.scaleFactor*MV.mesh.scaleFactor*MV.mesh.scaleFactor*0.000002048;
 	}
 
 }

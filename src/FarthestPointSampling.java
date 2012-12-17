@@ -15,7 +15,7 @@ public class FarthestPointSampling extends Sampling {
 		int psv=polyhedron.sizeOfVertices();
 		Vertex prev;
 		Vertex vmax=new Vertex();
-		Double max;
+		Double max=0.d;
 		prev=polyhedron.vertices.get((int)Math.random()*psv);
 		
 		// Initialization
@@ -37,6 +37,9 @@ public class FarthestPointSampling extends Sampling {
 			prev=vmax;
 		}
 		
+		// max is the distance between the 2 closest points
+		System.out.println("max = "+max);
+		Parameters.radius=max.floatValue();
 		
 		System.out.println("ok");
 		System.out.println("Sampling : "+vertices.size()+" points selected ("+Parameters.samplingRatio*100+" %)");
