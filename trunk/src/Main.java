@@ -12,16 +12,18 @@ import processing.core.PApplet;
 public class Main extends MeshViewer {
 
 	// BE CAREFUL : if you launch MeshViewer as a Java Applet, remove "src/" from the filepath .
-	//static String filename="src/OFF/tri_round_cube.off";
-	static String filename="src/OFF/tri_triceratops.off";
+	static String filename="src/OFF/tri_round_cube.off";
+	//static String filename="src/OFF/tri_triceratops.off";
 	//static String filename="src/OFF/bunny.off";
 	//static String filename="src/OFF/OFF/OFF_various/cow.off";
 	Sampling sample;
 	SignatureMap signatures;
+	//RefSignatureMap signatures;
 	ReflectionSpace reflections;
 	MeanShiftClustering clusters;
 	Reflection test2;
 	Signature s1,s2;
+	//RefSignature s1,s2;
 	
 	// This function will monitor all the steps of our program
 	@Override
@@ -32,11 +34,13 @@ public class Main extends MeshViewer {
 		
 		this.sample = new FarthestPointSampling(this.mesh.polyhedron3D);
 		this.signatures = new SignatureMap(this.sample);
+		//this.signatures = new RefSignatureMap(this.sample);
 		this.reflections = new ReflectionSpace(signatures);
 		this.clusters = new MeanShiftClustering(reflections);
 				
 		// test reflection
 		List<Signature> list=this.signatures.getSignatures();
+		//List<RefSignature> list=this.signatures.getSignatures();
 		this.s1=list.get((int)(Math.random()*list.size()));
 		this.s2=list.get((int)(Math.random()*list.size()));
 		this.test2 = new Reflection(s1,s2);
@@ -96,6 +100,7 @@ public class Main extends MeshViewer {
 		//Reflection r=lr.get((int) (Math.random()*lr.size()));
 		Reflection r = lr.get(0);
 		if(r.valid) r.display4(this);
+		//this.signatures.displayCustom(this);
 	}
 	
 	

@@ -61,10 +61,54 @@ public class Reflection {
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 		this.validityValue=(n2i.difference(s1.getNormale())).squaredLength().doubleValue();
 	}
-	
+	public Reflection(RefSignature s1, RefSignature s2){
+		r = new double[6];
+		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
+		n=n.normalized();
+		if (n.x<=0.){
+			if(n.x<0.)
+				n = n.opposite();
+			else if (n.y<=0.){
+				if(n.y<0.)
+					n = n.opposite();
+				else if (n.z <= 0.){
+					if(n.z<0)
+						n=n.opposite();
+					else{ 
+						System.out.println("Trying to compute a transformation with two identical points !");
+						System.exit(1);
+					}
+				}
+			}
+		}
+
+//		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
+		Point_3 mid = Point_3.linearCombination(new Point_3[]{s1.getVertex().getPoint(),s2.getVertex().getPoint()},
+				new Number[]{0.5d,0.5d});
+		Vector_3 middle = new Vector_3(new Point_3(0,0,0),mid);
+		Vector_3 proj = n.multiplyByScalar(middle.innerProduct(n));
+		r[0] = proj.x;
+		r[1] = proj.y;
+		r[2] = proj.z;
+		r[3] = n.x;
+		r[4] = n.y;
+		r[5] = n.z;
+		v1 = s1.getVertex();
+		v2 = s2.getVertex();
+		//Vector_3 n2i = //faux pour je ne sais quelle raison
+		//	s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
+		Vector_3 n2i = new Vector_3(new Point_3(2*r[0], 2*r[1], 2*r[2]), this.image(new Point_3(0,0,0).plus(s2.getNormale())));
+		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
+	}
     public Reflection(double[] ds) {
 		this.r=ds.clone();
 	}
+    
+    public Point_3 image(Point_3 p){
+    	Vector_3 n = new Vector_3(r[3], r[4], r[5]);
+    	Point_3 proj = new Point_3(r[0], r[1], r[2]);
+    	return p.plus(n.multiplyByScalar(n.innerProduct(new Vector_3(proj, p)).doubleValue()*(-2.)));
+    }
 	// display the reflection plane
 	public void display(MeshViewer MV){
 		
