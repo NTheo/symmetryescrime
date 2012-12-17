@@ -63,13 +63,14 @@ public class Main extends MeshViewer {
 
 //		this.displayAllReflectionPairsOfPoints();
 //		this.displayOneReflectionPairOfPointsAndNormals();
-//		this.displayAllReflectionPlanes();
+
 		this.clustering.displayOneCluster(this);
+//		this.displayAllReflectionPlanes();
 	}
 	
 	public void displayAllReflectionPlanes(){
-		for(Cluster c: this.clustering.clusters){
-			c.r.display(this);
+		for(int i=0; i<Math.min(this.clustering.clusters.size(), viewIndex+1);i++){
+			this.clustering.clusters.get(i).r.display(this);
 		}
 	}
 	
