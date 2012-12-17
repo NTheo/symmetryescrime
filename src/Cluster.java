@@ -2,9 +2,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import Jcg.polyhedron.Vertex;
-
-
 public class Cluster {
 	public Reflection r;
 	public int weight;

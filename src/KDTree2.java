@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 public class KDTree2<T> {
-	protected static final int defaultBucketSize = 48;
+	protected static final int defaultBucketSize = 448;
 
 	public final int dimensions;
 	private final int bucketSize;
