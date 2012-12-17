@@ -56,9 +56,9 @@ public class Reflection {
 		r[5] = n.z;
 		v1 = s1.getVertex();
 		v2 = s2.getVertex();
-		Vector_3 n2i = 
-			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
-		double test = n2i.squaredLength().doubleValue();
+//		Vector_3 n2i =    // faux
+//			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
+		Vector_3 n2i = new Vector_3(new Point_3(2*r[0], 2*r[1], 2*r[2]), this.image(new Point_3(0,0,0).plus(s2.getNormale())));		
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 		this.validityValue=(n2i.difference(s1.getNormale())).squaredLength().doubleValue();
 	}
@@ -125,8 +125,8 @@ public class Reflection {
 		//MV.line(0, 0, 0, (float) (normal.x*scale*10),(float) (normal.y*scale*10),(float) (normal.z*scale*10));
 				
 		MV.rectMode(2);
-		MV.fill(128+this.hashCode()*127,128+this.hashCode()%127,128+2*this.hashCode()%127,100);
-		MV.stroke(128+this.hashCode()*127,128+this.hashCode()%127,128+2*this.hashCode()%127);
+		MV.fill(128+this.hashCode()*127,128+this.hashCode()%127,128+(2*this.hashCode())%127,100);
+		MV.stroke(128+this.hashCode()*127,128+this.hashCode()%127,128+(2*this.hashCode())%127);
 		float alpha, beta, gamma;
 		if(Math.abs(normal.z) != 1.f){
 			// alpha = acos(-z2/sqrt(1-z3²)
@@ -215,14 +215,19 @@ public class Reflection {
 		Vector_3 n1=s1.getNormale().normalized();
 		Vector_3 n2=s2.getNormale().normalized();
 		
+		//Recompute the image of the 2 points
+		Vector_3 n2i = new Vector_3(new Point_3(2*r[0], 2*r[1], 2*r[2]), this.image(new Point_3(0,0,0).plus(s2.getNormale())));
 		double scale = mv.mesh.scaleFactor/5;
 		
 		n1=n1.multiplyByScalar(scale);
 		n2=n2.multiplyByScalar(scale);
+		n2i=n2i.multiplyByScalar(scale);
 
 		mv.stroke(250.0f,250.0f,250.0f);
 		mv.mesh.drawSegment(p1, p1.plus(n1));
 		mv.mesh.drawSegment(p2, p2.plus(n2));
+		mv.stroke(255,255,0);
+		mv.mesh.drawSegment(p1, p1.plus(n2i));
 		
 		//System.out.println("Reflection has a validity value of : "+this.validityValue);
 		

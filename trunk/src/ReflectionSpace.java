@@ -8,6 +8,7 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 		List<Signature> neighbors;
 		Reflection r;
 		int valids;
+		int validReflections=0;
 		for(Signature s: SM.p){
 			neighbors = SM.q.getRange(new double[]{s.getPrincipalCurvature1()-Parameters.pairingRange/2,
 					s.getPrincipalCurvature2()-Parameters.pairingRange/2},
@@ -19,10 +20,12 @@ public class ReflectionSpace extends KDTree2<Reflection> {
 				if(r.valid){
 					this.add(r.r, r);
 					valids++;
+					validReflections++;
 				}
 			}
 			//System.out.println("neighbor : "+neighbors.size()+" -> "+valids);
 		}
+		System.out.println(validReflections+" were added to ReflectionSpace.");
 	}
 	
 	public ReflectionSpace(RefSignatureMap SM){

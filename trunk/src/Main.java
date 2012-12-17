@@ -22,8 +22,7 @@ public class Main extends MeshViewer {
 	//RefSignatureMap signatures;
 	ReflectionSpace reflections;
 	MeanShiftClustering clusters;
-	static int viewIndexForReflections=0;
-	static int viewIndexForSignatures=0;
+	static int viewIndex=0;
 	
 	// test reflection
 	Reflection test2;
@@ -61,11 +60,12 @@ public class Main extends MeshViewer {
 		//this.signatures.displaySpheres(this);
 
 //		this.signatures.displayNeighborsNumber(this);	
-		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
+//		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
 
-//		this.displayAllReflectionPlanes();
-//		this.displayAllReflectionPoints();
+//		this.displayAllReflectionPairsOfPoints();
 //		this.displayOneReflectionPairOfPointsAndNormals();
+//		this.displayAllReflectionPlanes();
+		this.clusters.displayOneClusterAndPairsOfPoints(this);
 	}
 	
 	public void displayAllReflectionPlanes(){
@@ -80,9 +80,9 @@ public class Main extends MeshViewer {
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
 				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE}
 				)){
-			if(r.valid){
+			//if(r.valid){  // test a priori inutile
 				r.display3(this);
-			}
+			//}
 		}
 	}
 	
@@ -92,7 +92,7 @@ public class Main extends MeshViewer {
 				new double[]{Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE, Double.MIN_VALUE},
 				new double[]{Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE});
 		if(lr.size()>0){
-			Reflection r = lr.get(viewIndexForReflections%lr.size());
+			Reflection r = lr.get(viewIndex%lr.size());
 			if(r.valid){ 
 				r.display4(this);
 				System.out.println("validity value = "+r.validityValue);
@@ -139,16 +139,7 @@ public class Main extends MeshViewer {
 	}
 
 	public void keyPressed(){
-		switch(key){
-		case('r'):
-			viewIndexForReflections++;
-			break;
-		case('s'):
-			viewIndexForSignatures++;
-			break;	
-		default:
-			System.out.println("Please presse R to display a new reflection, and S to display a new Signature.");
-		}
+		this.viewIndex++;
 	}
 
 	public static void main(String[] args) {
