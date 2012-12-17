@@ -114,34 +114,26 @@ public class Reflection {
 	public void display(MeshViewer MV){
 		
 		double scale=MV.mesh.scaleFactor;				
-				
-//		MV.noStroke();
-//		MV.fill(255,0,0);
-		MV.translate((float) (r[0]*scale),(float) (r[1]*scale), (float) (r[2]*scale));
-//		MV.sphere((float) MV.mesh.scaleFactor/3);
-		
+			
+		MV.translate((float) (r[0]*scale),(float) (r[1]*scale), (float) (r[2]*scale));		
 		Vector_3 normal = new Vector_3(r[3],r[4],r[5]);
-		MV.stroke(255,255,255);
-		//MV.line(0, 0, 0, (float) (normal.x*scale*10),(float) (normal.y*scale*10),(float) (normal.z*scale*10));
-				
+
 		MV.rectMode(2);
 		MV.fill(128+this.hashCode()%127,128+this.hashCode()%127,128+(2*this.hashCode())%127,100);
 		MV.stroke(128+this.hashCode()%127,128+this.hashCode()%127,128+(2*this.hashCode())%127);
-		float alpha, beta, gamma;
+		float alpha, beta;
+		
 		if(Math.abs(normal.z) != 1.f){
 			// alpha = acos(-z2/sqrt(1-z3²)
 			alpha = (float) Math.acos(-normal.y/Math.sqrt(1-normal.z*normal.z));
-			//alpha=Math.atan2(y, x)
 			// beta = acos(z3);
 			beta = (float) Math.acos(normal.z);  // Processing frame is left-handed -> doesn't matter ?
 			// gamma = acos(y3/sqrt(1-z3²)
 			//gamma = (float) Math.acos(-normal.x/Math.sqrt(1-normal.z*normal.z));
-			gamma = (float) Math.acos(0);
 		}
 		else{
 			// the normal and the z axis are already aligned
 			alpha=0.f;
-			gamma=0.f;
 			beta= (float) Math.acos(normal.z);
 		}
 		

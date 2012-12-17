@@ -16,7 +16,6 @@ public class MeanShiftClustering {
 	double sqMergeRad;  // merging radius
 	private double inflRad;
 	public ArrayList<Cluster> clusters;
-	//RangeSearch Rs;  // data structure for nearest neighbor search
 
 	/**
 	 * Main algorithm for detecting all clusters
@@ -29,7 +28,7 @@ public class MeanShiftClustering {
 	MeanShiftClustering(KDTree2<Reflection> n){
 		System.out.println("Clustering...");
 		N = n;
-		initMSC(n, Parameters.clusterRadius, 0., Parameters.clusterRadius*2/3., Parameters.clusterRadius*3.);
+		initMSC(n);
 		int clusterIndex = 0;
 		clusters = new ArrayList<Cluster>();
 		for(Reflection r:N.all()){
@@ -40,32 +39,17 @@ public class MeanShiftClustering {
 		}
 		System.out.println(clusters.size()+" clusters detected before merging");
 		int iinit = 0;
-		//do{iinit = mergeCluster(iinit);}while(-1!=iinit);
+		do{iinit = mergeCluster(iinit);}while(-1!=iinit);
 		System.out.println(clusters.size()+" clusters extracted");
 	}
 
-	void initMSC (KDTree2<Reflection> n, /*KDTree2<Reflection> s,*/ double cr, double ar, double ir, double mr){
+	void initMSC (KDTree2<Reflection> n){
 		N = n;
-//		sqCvgRad = cr*cr;
-//		sqAvgRad = ar*ar;
-//		sqInflRad = ir*ir;
-//		cvgRad = cr;
-//		inflRad = ir;
-//		sqMergeRad = mr*mr;
 		sqCvgRad = Parameters.bandwidth*0.001;
 		sqAvgRad = Parameters.bandwidth;
 		sqInflRad = Parameters.bandwidth/4;
-		sqMergeRad = Parameters.bandwidth;
+		sqMergeRad = Parameters.bandwidth*Parameters.mergingCoeff;
 	}
-
-//	MeanShiftClustering (KDTree2<Reflection> n, KDTree2<Reflection> s, 
-//			double cr, double ar, double ir, double mr) {
-//		initMSC (n,/*s,*/cr,ar,ir, mr);
-//	}
-//
-//	MeanShiftClustering (KDTree2<Reflection> n, double bandWidth) {
-//		initMSC (n, /*n,*/ bandWidth*1e-3, bandWidth, bandWidth/4, bandWidth);
-//	} 
 
 	/**
 	 * Single cluster detection -- returns approximate peak and cluster points
@@ -74,7 +58,7 @@ public class MeanShiftClustering {
 	 *  - the peak point (at the top of the list)
 	 */
 	private final static int d = 6;
-	public /*KDTree2<Reflection>*/ Cluster detectCluster (Reflection seed, int clusterIndex) { 
+	public Cluster detectCluster (Reflection seed, int clusterIndex) { 
 		List<Reflection> pointsOfPath = new ArrayList<Reflection>();
 		Reflection prev;
 		Reflection next;
@@ -144,7 +128,7 @@ public class MeanShiftClustering {
 	}
 
 
-	// Display 
+	// Display one cluster and the reflection plane
 	public void displayOneClusterAndPairsOfPoints(MeshViewer mv){
 		Cluster c = this.clusters.get(Main.viewIndex%this.clusters.size());
 		c.r.display(mv);  // plane
