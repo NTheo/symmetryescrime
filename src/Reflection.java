@@ -58,6 +58,7 @@ public class Reflection {
 		v2 = s2.getVertex();
 		Vector_3 n2i = 
 			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
+		double test = n2i.squaredLength().doubleValue();
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 		this.validityValue=(n2i.difference(s1.getNormale())).squaredLength().doubleValue();
 	}
