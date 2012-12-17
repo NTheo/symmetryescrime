@@ -13,7 +13,7 @@ import Jcg.polyhedron.Vertex;
  */
 public class SignatureMap {
 	List<Signature> p = new LinkedList<Signature>();
-	KDTree2<Signature> q = new KDTree2<Signature>(2);
+	KDTree<Signature> q = new KDTree<Signature>(2);
 	
 	public SignatureMap(Sampling sample){
 		System.out.print("Computing signatures...");

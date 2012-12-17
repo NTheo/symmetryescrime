@@ -9,7 +9,7 @@ import java.util.List;
  * @author Chase (ZLIB License)
  * 
  */
-public class KDTree2<T> {
+public class KDTree<T> {
 	protected static final int defaultBucketSize = 448;
 
 	public final int dimensions;
@@ -22,7 +22,7 @@ public class KDTree2<T> {
 	 * @param dimensions
 	 *            - Number of dimensions
 	 */
-	public KDTree2(int dimensions) {
+	public KDTree(int dimensions) {
 		this.dimensions = dimensions;
 		this.bucketSize = defaultBucketSize;
 		this.root = new NodeKD();
@@ -36,7 +36,7 @@ public class KDTree2<T> {
 	 * @param bucket
 	 *            - Size of the buckets.
 	 */
-	public KDTree2(int dimensions, int bucket) {
+	public KDTree(int dimensions, int bucket) {
 		this.dimensions = dimensions;
 		this.bucketSize = bucket;
 		this.root = new NodeKD();

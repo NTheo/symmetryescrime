@@ -13,7 +13,7 @@ import Jcg.polyhedron.Vertex;
  */
 public class RefSignatureMap {
 	List<RefSignature> p = new LinkedList<RefSignature>();
-	KDTree2<RefSignature> q = new KDTree2<RefSignature>(2);
+	KDTree<RefSignature> q = new KDTree<RefSignature>(2);
 	
 	public RefSignatureMap(Sampling sample){
 		System.out.print("Computing refsignatures...");

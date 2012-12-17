@@ -65,7 +65,7 @@ public class SurfaceMesh {
 		float z1=(float)p.getZ().doubleValue()*s;
 		
 		view.translate(x1, y1, z1);
-		view.sphere(s/10f);
+		view.sphere(5f);
 		view.translate(-x1, -y1, -z1);
 	}
 	
