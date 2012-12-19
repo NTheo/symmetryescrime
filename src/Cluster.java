@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Represent a cluster, corresponding to a given reflection
+ * @author Antoine & NTheo (2012)
+ *
+ */
 public class Cluster implements Comparable<Cluster> {
 	public Reflection r;
 	public int weight;

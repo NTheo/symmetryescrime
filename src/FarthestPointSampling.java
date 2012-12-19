@@ -3,7 +3,7 @@ import Jcg.polyhedron.Vertex;
 
 
 /**
- * This class performs a uniform sampling of the model, based on Farthest Point
+ * This class performs a uniformly distributed sampling of the model, based on the Farthest Point algorithm
  * @author Antoine & NTheo (2012)
  *
  */
@@ -37,7 +37,8 @@ public class FarthestPointSampling extends Sampling {
 			prev=vmax;
 		}
 		
-		// max is the distance between the 2 closest points
+		// max is the distance between the 2 closest points of the sampling
+		// we update Parameters.radius with this value, which is better than the heuristic one
 		Parameters.radius=max.floatValue();
 		
 		System.out.println("ok");

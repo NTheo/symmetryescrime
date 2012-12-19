@@ -2,7 +2,11 @@ import Jcg.geometry.Vector_3;
 import Jcg.polyhedron.Halfedge;
 import Jcg.polyhedron.Vertex;
 
-
+/**
+ * This class computes and stores principal directions and curvatures for a vertex
+ * @author Antoine & NTheo (2012)
+ *
+ */
 public class RefSignature {
 	private Vertex v;
 	private Vector_3 normale;

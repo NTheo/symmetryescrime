@@ -162,7 +162,7 @@ public class MeanShiftClustering {
 		}
 		Cluster c = this.clusters.get(Main.viewIndex%this.clusters.size());
 		
-		c.r.display(mv);  // plane
+		c.r.displayReflectionPlane(mv);  // plane
 
 		for(pair p:c.l){
 			mv.noStroke();

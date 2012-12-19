@@ -3,25 +3,19 @@ import Jcg.geometry.Vector_3;
 import Jcg.polyhedron.Vertex;
 
 
+/**
+ * Computes a Reflection form two Signatures, stores it and displays it
+ * @author Antoine & NTheo (2012)
+ *
+ */
 public class Reflection {
 	public double[] r;
 	protected double weight;
 	private Vertex v1,v2;
 	public boolean valid;
-	public double validityValue;
-	/**
-	 * @return the v1
-	 */
-	public Vertex getV1() {
-		return v1;
-	}
-	/**
-	 * @return the v2
-	 */
-	public Vertex getV2() {
-		return v2;
-	}
+	public double validityValue;   // debug
 	public int cluster=-1;
+
 	public Reflection(Signature s1, Signature s2){
 		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
@@ -43,7 +37,6 @@ public class Reflection {
 			}
 		}
 
-//		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
 		Point_3 mid = Point_3.linearCombination(new Point_3[]{s1.getVertex().getPoint(),s2.getVertex().getPoint()},
 				new Number[]{0.5d,0.5d});
 		Vector_3 middle = new Vector_3(new Point_3(0,0,0),mid);
@@ -56,12 +49,11 @@ public class Reflection {
 		r[5] = n.z;
 		v1 = s1.getVertex();
 		v2 = s2.getVertex();
-//		Vector_3 n2i =    // faux
-//			s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
 		Vector_3 n2i = new Vector_3(new Point_3(2*r[0], 2*r[1], 2*r[2]), this.image(new Point_3(0,0,0).plus(s2.getNormale())));		
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 		this.validityValue=(n2i.difference(s1.getNormale())).squaredLength().doubleValue();
 	}
+	
 	public Reflection(RefSignature s1, RefSignature s2){
 		r = new double[6];
 		Vector_3 n = (Vector_3) s2.getVertex().getPoint().minus(s1.getVertex().getPoint());
@@ -83,7 +75,6 @@ public class Reflection {
 			}
 		}
 
-//		Vector_3 middle = (Vector_3) s2.getVertex().getPoint().minus(new Point_3()).sum(s1.getVertex().getPoint().minus(new Point_3())).divisionByScalar(2.);
 		Point_3 mid = Point_3.linearCombination(new Point_3[]{s1.getVertex().getPoint(),s2.getVertex().getPoint()},
 				new Number[]{0.5d,0.5d});
 		Vector_3 middle = new Vector_3(new Point_3(0,0,0),mid);
@@ -96,13 +87,21 @@ public class Reflection {
 		r[5] = n.z;
 		v1 = s1.getVertex();
 		v2 = s2.getVertex();
-		//Vector_3 n2i = //faux pour je ne sais quelle raison
-		//	s2.getNormale().sum(n.multiplyByScalar((n.innerProduct(s2.getNormale().difference(proj))).doubleValue()*(-2.))).difference(proj.multiplyByScalar(2.));
 		Vector_3 n2i = new Vector_3(new Point_3(2*r[0], 2*r[1], 2*r[2]), this.image(new Point_3(0,0,0).plus(s2.getNormale())));
 		this.valid = (n2i.difference(s1.getNormale())).squaredLength().doubleValue() < Parameters.reflectionThreshold;
 	}
+	
+	// Must be used carefully !
     public Reflection(double[] ds) {
 		this.r=ds.clone();
+	}
+    
+	public Vertex getV1() {
+		return v1;
+	}
+
+	public Vertex getV2() {
+		return v2;
 	}
     
     public Point_3 image(Point_3 p){
@@ -110,8 +109,9 @@ public class Reflection {
     	Point_3 proj = new Point_3(r[0], r[1], r[2]);
     	return p.plus(n.multiplyByScalar(n.innerProduct(new Vector_3(proj, p)).doubleValue()*(-2.)));
     }
+    
 	// display the reflection plane
-	public void display(MeshViewer MV){
+	public void displayReflectionPlane(MeshViewer MV){
 		
 		double scale=MV.mesh.scaleFactor;				
 			
@@ -127,9 +127,7 @@ public class Reflection {
 			// alpha = acos(-z2/sqrt(1-z3²)
 			alpha = (float) Math.acos(-normal.y/Math.sqrt(1-normal.z*normal.z));
 			// beta = acos(z3);
-			beta = (float) Math.acos(normal.z);  // Processing frame is left-handed -> doesn't matter ?
-			// gamma = acos(y3/sqrt(1-z3²)
-			//gamma = (float) Math.acos(-normal.x/Math.sqrt(1-normal.z*normal.z));
+			beta = (float) Math.acos(normal.z); 
 		}
 		else{
 			// the normal and the z axis are already aligned
@@ -139,26 +137,16 @@ public class Reflection {
 		
 		MV.rotateZ(alpha);
 		MV.rotateX(beta);
-//		MV.rotateZ(gamma);
-		
-//		MV.stroke(0,255,255);   // light blue
-//		MV.mesh.drawAxis();
-		
-//		MV.rotateX(0.2f);
-//		
-//		MV.stroke(255,255,0);   // yellow
-//		MV.mesh.drawAxis();
-//		MV.stroke(255,255,255);
 		
 		MV.rect(0,0,(float) (scale*Parameters.maxDistance*.7), (float) (scale *Parameters.maxDistance*.7));
-		
-		//MV.rotateZ(-gamma);
+
 		MV.rotateX(-beta);
 		MV.rotateZ(-alpha);
 		MV.translate((float) (-r[0]*scale),(float) (-r[1]*scale), (float) (-r[2]*scale));
 	}
 	
-	public void display2(MeshViewer mv){
+	// Display some segments to provide a rough visualization of the reflection plane
+	public void displayQuickPlane(MeshViewer mv){
 		Point_3 p = new Point_3(r[0], r[1], r[2]);
 		mv.stroke(this.hashCode()%255,(2*this.hashCode())%255,(3*this.hashCode())%255);
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[4], r[3], 0)).multiplyByScalar(150.)));
@@ -176,7 +164,9 @@ public class Reflection {
 		mv.mesh.drawSegment(p, p.plus((new Vector_3(-r[5], -r[5], r[3]+r[4])).multiplyByScalar(150.)));
 				
 	}
-	public void display3(MeshViewer mv){
+	
+	// Display the two points that have been used to compute this reflection
+	public void displayPairOfPoints(MeshViewer mv){
 		mv.noStroke();
 		mv.fill(this.hashCode()%255,(2*this.hashCode())%255,(3*this.hashCode())%255);
 		mv.mesh.drawVertex(v1.getPoint());
@@ -186,7 +176,8 @@ public class Reflection {
 		mv.mesh.drawSegment(v1.getPoint(), v2.getPoint());
 	}
 
-	public void display4(MeshViewer mv){
+	// Display the two points that have been used to compute this reflection, their normals and the reflection plane
+	public void displayPointsAndNormals(MeshViewer mv){
 		
 		Point_3 p1=v1.getPoint();
 		Point_3 p2=v2.getPoint();
@@ -223,7 +214,7 @@ public class Reflection {
 		
 		//System.out.println("Reflection has a validity value of : "+this.validityValue);
 		
-		this.display(mv);
+		this.displayReflectionPlane(mv);
 	}
 }
 
