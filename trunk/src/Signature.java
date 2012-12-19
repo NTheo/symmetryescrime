@@ -7,7 +7,7 @@ import Jcg.geometry.*;
 import Jcg.polyhedron.*;
 
 /**
- * Class for point signatures. Computes principal directions and curvatures
+ * This class computes and stores principal directions and curvatures for a vertex
  * @author Antoine & NTheo (2012)
  *
  */

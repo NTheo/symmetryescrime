@@ -1,4 +1,9 @@
 
+/**
+ * General representation of a transformation
+ * @author Antoine & NTheo (2012)
+ *
+ */
 public class Transformation {
 	protected float s;
 	protected float Rx;
@@ -33,7 +38,6 @@ public class Transformation {
 		return weight;
 	}
 	public Transformation(Signature s1, Signature s2){
-		//that ain't good.
 	}
 	
 }

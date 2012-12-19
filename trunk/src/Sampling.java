@@ -48,7 +48,7 @@ public abstract class Sampling {
 		}
 	}
 	
-	// Display a little sphere for each vertex in the sample - too slow !
+	// Display a little sphere for each vertex in the sample
 	public void displayPoints(MeshViewer MV){
 		MV.noStroke();
 		MV.fill(250f, 250f, 0f);

@@ -6,6 +6,7 @@ import processing.core.PApplet;
 
 
 /**
+ * Load the mesh, execute the different steps of the algorithm, and display the results
  * @author Antoine & NTheo (2012)
  *
  */
@@ -16,7 +17,8 @@ public class Main extends MeshViewer {
 	//static String filename="src/OFF/tri_round_cube.off";
 	static String filename="src/OFF/tri_triceratops.off";
 	//static String filename="src/OFF/bunny.off";
-	//static String filename="src/OFF/OFF/OFF_various/cow.off";
+	//static String filename="src/OFF/cow.off";
+	
 	Sampling sample;
 	SignatureMap signatures;
 	//RefSignatureMap signatures;
@@ -29,7 +31,8 @@ public class Main extends MeshViewer {
 	Signature s1,s2;
 	//RefSignature s1,s2;
 	
-	// This function will monitor all the steps of our program
+	
+	// This function executes all the steps of the program successively
 	@Override
 	public void setup() {
 		super.setup();	
@@ -53,32 +56,29 @@ public class Main extends MeshViewer {
 		//this.mesh.drawAxis();
 		this.mesh.draw();
 
-		//this.sample.displaySpheres(this);
-		//this.signatures.displayPoints(this);
-		//this.signatures.displayNormalized(this);
-		//this.signatures.displayCustom(this);
+//		this.sample.displayPoints(this);
+//		this.signatures.displayPoints(this);
+//		this.signatures.displayCustom(this);
 //		this.signatures.displaySpheres(this);
 
-//		this.signatures.displayNeighborsNumber(this);	
-		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
+//		this.signatures.displayCorrespondingPointsInSignatureSpace(this);
 
-//		this.displayAllReflectionPairsOfPoints();
-//		this.displayOneReflectionPairOfPointsAndNormals();
-
-//		this.clustering.displayOneCluster(this);
+		this.clustering.displayOneCluster(this);
 //		this.displayAllReflectionPlanes();
 	}
 	
+	
+	// Display all reflection planes found, starting from the most relevant one (press any key to display a new plan)
 	public void displayAllReflectionPlanes(){
 		for(int i=0; i<Math.min(this.clustering.clusters.size(), viewIndex+1);i++){
-			this.clustering.clusters.get(i).r.display(this);
+			this.clustering.clusters.get(i).r.displayReflectionPlane(this);
 		}
 	}
 	
 	// Display the pairs of points that have been used to generate Reflections in ReflectionSPace
 	public void displayAllReflectionPairsOfPoints(){
 		for(Reflection r:this.reflections.getAll()){
-				r.display3(this);
+				r.displayPairOfPoints(this);
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class Main extends MeshViewer {
 		if(lr.size()>0){
 			Reflection r = lr.get(viewIndex%lr.size());
 			if(r.valid){ 
-				r.display4(this);
+				r.displayPointsAndNormals(this);
 				System.out.println("validity value = "+r.validityValue);
 			}
 			else
@@ -103,7 +103,7 @@ public class Main extends MeshViewer {
 		Vector_3 n = (new Vector_3(.2,.6,.3)).normalized();
 		Vector_3 p = n.multiplyByScalar(2);
 		Reflection test = new Reflection(new double[]{p.x,p.y,p.z,n.x,n.y,n.z});
-		test.display(this);
+		test.displayReflectionPlane(this);
 	}
 	
 	// Test the display of a reflection computed from two Signatures (taken from SignatureMap)
@@ -129,9 +129,10 @@ public class Main extends MeshViewer {
 		this.mesh.drawVertex(p1);
 		this.mesh.drawVertex(p2);
 		
-		this.test2.display(this);
+		this.test2.displayReflectionPlane(this);
 	}
 
+	// Basic UI ^^
 	public void keyPressed(){
 		viewIndex++;
 	}

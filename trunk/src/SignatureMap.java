@@ -7,7 +7,8 @@ import Jcg.geometry.Vector_3;
 import Jcg.polyhedron.Vertex;
 
 /**
- * All the valid signatures from the sampling
+ * This class computes all the signatures of the points in the sample, prune them,
+ * and split them into a list and a KD-Tree, which will be used for pairing
  * @author Antoine & NTheo (2012)
  *
  */
@@ -135,7 +136,7 @@ public class SignatureMap {
 		}
 	}
 	
-	// display sphere with Parameters.radius as a parameter
+	// display sphere with Parameters.radius as the radius
 	public void displaySpheres(MeshViewer mv){
 		Point_3 p;
 		float scale = (float) mv.mesh.scaleFactor;
@@ -163,6 +164,7 @@ public class SignatureMap {
 		}
 	}
 	
+	// Display the points that lie within the pairing range of a point in the Signature Space.
 	public void displayCorrespondingPointsInSignatureSpace(MeshViewer mv){
 		Signature s = this.p.get(Main.viewIndex%p.size());
 		List<Signature> neighbors = this.q.getRange(new double[]{s.getPrincipalCurvature1()-Parameters.pairingRange/2,

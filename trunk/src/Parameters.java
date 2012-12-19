@@ -9,17 +9,17 @@ import Jcg.polyhedron.Vertex;
  */
 public class Parameters {
 
-	static final double samplingRatio=0.2;		// 0.2
-	static final double pruningThreshold=0.75;	// 0.75
-	static final double pairingRatio=0.2;		// 0.2
+	static final double samplingRatio=0.2;			// 0.2
+	static final double pruningThreshold=0.75;		// 0.75
+	static final double pairingRatio=0.2;			// 0.2
 	static final double bandwidth = 0.1;			// 0.1
-	static final double mergingCoeff = 1;		// 1
-	static final double reflectionThreshold=0.05;// 0.05	
+	static final double mergingCoeff = 1;			// 1
+	static final double reflectionThreshold=0.05;	// 0.05	
 	
-	static float radius;
-	static float minDistance;
-	static float maxDistance;
-	static double pairingRange;		// 0.5
+	static float radius;       		// for computing the signatures
+	static float minDistance;		// distance of the vertex closest to the origin
+	static float maxDistance;		// distance of the vertex farthest to the origin
+	static double pairingRange;		// 0.5 for triceratops, 100 000 for bunny !
 	
 	public static void setMinDistance(MeshViewer MV){
 		double min=Double.MAX_VALUE;
@@ -48,6 +48,7 @@ public class Parameters {
 	public static void init(MeshViewer MV){
 		setMinDistance(MV);
 		setMaxDistance(MV);
+		// This numerical coefficient has to be manually adjusted... 
 		pairingRange=MV.mesh.scaleFactor*5;
 	}
 

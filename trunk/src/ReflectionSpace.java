@@ -1,7 +1,14 @@
 import java.util.List;
 
 
+/**
+ * A KD-Tree where transformations are stored after being computed from 
+ * pairs of points extracted form the Signature Map
+ * @author Antoine & NTheo (2012)
+ *
+ */
 public class ReflectionSpace extends KDTree<Reflection> {
+	
 	public ReflectionSpace(SignatureMap SM){
 		super(6);
 		System.out.println("Pairing...");
